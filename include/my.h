@@ -12,14 +12,18 @@
 
     int my_putstr(char const *str);
     int my_putchar(char c);
-    char **my_str_to_word_array(char const *str);
-    char **word_array_two_dots(char const *str);
     char *my_strdup(char const *src);
     int my_strlen(char const *str);
     int my_strcomp(char *str, char *comp);
     int my_strcomp_wo_len(char *str, char *comp);
     char* my_strcat (char *dest, char const *src);
     char *my_strcpy(char *dest, char const *src);
+    int is_delimiter(char c, char *delim);
+    int cut_str(char const *str, char *delim);
+    int check_character(char const *str, char *delim, int cut_here);
+    char **word_array_delimiter(char const *str, char *delimiters);
+
+    void print_prompt(void);
     void get_input(char **env, stock_t *sk, char *path, char ***cpy_env);
     int child_process(char** env, char *usr_bin, stock_t *sk);
     char* pars_env(char **cpy_env);
@@ -55,17 +59,14 @@
     char** create_unsetenv(stock_t *sk);
     int check_first_array(stock_t *sk, int check);
     void print_env_setenv(stock_t *sk);
-    char **my_str_to_word_array_virg(char const *str);
     void redirect_into_file(stock_t *sk, char **env,
     char *path, char ***cpy_env);
-    char **my_str_to_word_array_duck(char const *str);
     int exit_sh(stock_t *sk);
     void execute_command_redirect(char **env, char *path,
     char ***cpy_env, stock_t *sk);
     int exec_source_file(char **env, stock_t *sk);
     void count_duck(stock_t *sk);
     void execute_command(char **env, char *path, char ***cpy_env, stock_t *sk);
-    char **my_str_to_word_array_pipe(char const *str);
     int execute_command_pipe(char **env, char *path,
     char ***cpy_env, stock_t *sk);
     int execute_pipe(stock_t *sk, char **env, char *path, char ***cpy_env);

@@ -60,7 +60,7 @@ int execute_pipe(stock_t *sk, char **env, char *path, char ***cpy_env)
     pid_t pid = fork();
     if (pid == 0) {
         dup2(sk->input, 0); dup2(fds[1], 1); close(fds[0]);
-        sk->array_space = my_str_to_word_array(sk->array_pipe[sk->index_pipe]);
+        sk->array_space = word_array_delimiter(sk->array_pipe[sk->index_pipe], " \t\n");
         usr_bin = find_dots(path, sk);
         exec = execve(usr_bin, sk->array_space, env); error_exec(exec, sk);
     } close_fds(fds[1], sk);
@@ -81,7 +81,7 @@ char ***cpy_env, stock_t *sk)
         int pipe = my_strcomp_wo_len("|", sk->array_pipe[i]);
         if (pipe == 1)
             sk->count_pipe += 1;
-        sk->array_space = my_str_to_word_array(sk->array_pipe[i]);
+        sk->array_space = word_array_delimiter(sk->array_pipe[i], " \t\n");
     }
     builtin_pipe(env, cpy_env, sk, sk->array_space);
     sk->input = 0;

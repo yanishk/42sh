@@ -21,13 +21,10 @@ SRC	=	main.c 								\
 		src/count_duck.c					\
 		src/execute_binary.c 				\
 		src/pipe.c 							\
+		lib/word_array_delimiter.c 			\
+		lib/word_array_delimiter2.c 		\
 		lib/my_putstr.c 					\
 		lib/my_putchar.c 					\
-		lib/my_str_to_word_array.c 			\
-		lib/my_str_to_word_array_virg.c 	\
-		lib/my_str_to_word_array_duck.c 	\
-		lib/my_str_to_word_array_pipe.c 	\
-		lib/my_word_array_two_dots.c 		\
 		lib/my_strcomp.c 					\
 		lib/my_strcomp_wo_len.c 			\
 		lib/my_strlen.c 					\

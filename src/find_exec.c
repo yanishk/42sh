@@ -35,13 +35,13 @@ static char* concat_malloc_path(stock_t *sk, char **array_path, int x)
 
 char* find_dots(char *path, stock_t *sk)
 {
-    char **array_path = word_array_two_dots(path);
+    char **array_path = word_array_delimiter(path, ":");
     int x = 0;
     char *path_concat = NULL;
 
     if (path == NULL)
         return NULL;
-    array_path = word_array_two_dots(path);
+    array_path = word_array_delimiter(path, ":");
     while (array_path[x] != NULL) {
         path_concat = concat_malloc_path(sk, array_path, x);
         if (access(path_concat, X_OK) == 0) {
