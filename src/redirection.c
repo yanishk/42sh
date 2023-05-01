@@ -17,13 +17,14 @@
 void execute_redirect(char **env, char *path, char  **cpy_env, stock_t *sk)
 {
     char *usr_bin = NULL;
+    int is_a_source_file = loop_buffer(sk->array_space);
 
-    if (loop_buffer(sk->array_space) == 1) {
+    if (is_a_source_file == 1) {
         create_cd(cpy_env, sk);
         if (sk->check == 0)
             exec_source_file(env, sk);
     }
-    if (loop_buffer(sk->array_space) == 0 && exit_shell(sk) == 0) {
+    if (is_a_source_file == 0 && exit_shell(sk) == 0) {
         usr_bin = find_dots(path, sk);
         create_cd(cpy_env, sk);
         my_setenv(cpy_env, sk->array_space, sk);

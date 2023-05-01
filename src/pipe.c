@@ -14,18 +14,21 @@
 
 #include "my.h"
 
-void builtin_pipe(char **env, char  **cpy_env, stock_t *sk, char **end)
+int builtin_pipe(char **env, char  **cpy_env, stock_t *sk, char **end)
 {
-    if (loop_buffer(end) == 1) {
+    int is_a_source_file = loop_buffer(end);
+
+    if (is_a_source_file == 1) {
         create_cd(cpy_env, sk);
         if (sk->check == 0)
             exec_source_file(env, sk);
     }
-    if (loop_buffer(end) == 0) {
+    if (is_a_source_file == 0) {
         create_cd(cpy_env, sk);
         my_setenv(cpy_env, sk->array_space, sk);
         my_unsetenv(cpy_env, sk->array_space, sk);
     }
+    return is_a_source_file;
 }
 
 void error_exec(int exec, stock_t *sk)
@@ -73,6 +76,7 @@ int execute_pipe(stock_t *sk, char **env, char *path, char  **cpy_env)
 int execute_command_pipe(char **env, char *path,
 char  **cpy_env, stock_t *sk)
 {
+    int is_a_source_file = 0;
     int status = 0;
     sk->count_pipe = 0;
     sk->index_pipe = 0;
@@ -82,9 +86,9 @@ char  **cpy_env, stock_t *sk)
             sk->count_pipe += 1;
         sk->array_space = word_array_delim(sk->array_pipe[i], " \t\n");
     }
-    builtin_pipe(env, cpy_env, sk, sk->array_space);
+    is_a_source_file = builtin_pipe(env, cpy_env, sk, sk->array_space);
     sk->input = 0;
-    if (sk->check != 1 && exit_shell(sk) == 0) {
+    if (sk->check != 1 && is_a_source_file == 0 && exit_shell(sk) == 0) {
         status = execute_pipe(sk, env, path, cpy_env);
         which_error(status, sk);
     }
