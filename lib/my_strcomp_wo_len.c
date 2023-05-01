@@ -10,8 +10,8 @@ int my_strlen(char const *str);
 int my_strcomp_wo_len(char *str, char *comp)
 {
     for (int i = 0; comp[i] != '\0'; i += 1) {
-        if (str[i] != comp[i]) {
+        if (str[i] != comp[i])
             return 1;
-        }
     }
+    return 0;
 }

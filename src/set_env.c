@@ -49,7 +49,6 @@ void new_line_env(int check, stock_t *sk, char **change_env, int x)
 char** realloc_cpy_env(char **change_env, char ***cpy_env)
 {
     int x = 0;
-    int y = 0;
 
     x = len_line_add_sv(change_env);
     *cpy_env = malloc(sizeof(char *) * (x + 1));
@@ -63,16 +62,17 @@ char** realloc_cpy_env(char **change_env, char ***cpy_env)
     return *cpy_env;
 }
 
-char*** create_setenv(char **env, stock_t *sk, char*** cpy_env)
+char*** create_setenv(stock_t *sk, char*** cpy_env)
 {
     int res = my_strcomp_wo_len(sk->array_space[0], "setenv");
+
     if (res == 0) {
         if (sk->array_space[1] == NULL) {
             print_env_setenv(sk);
         sk->check = 1;
         } else {
             sk->check = 1;
-            char **change_env = my_setenv(env, sk, cpy_env);
+            char **change_env = my_setenv(sk, cpy_env);
             *cpy_env = realloc_cpy_env(change_env, cpy_env);
             cpy_struct_triple(cpy_env, sk);
         }

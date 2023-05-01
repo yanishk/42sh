@@ -38,7 +38,6 @@ int child_process(char** env, char *usr_bin, stock_t *sk)
 
 int exec_source_file(char **env, stock_t *sk)
 {
-    char *path;
     pid_t pid = fork();
     int status = 0;
 
@@ -70,8 +69,8 @@ void execute_command(char **env, char *path, char ***cpy_env, stock_t *sk)
         exit_sh(sk);
         usr_bin = find_dots(path, sk);
         create_cd(cpy_env, sk);
-        cpy_env = create_setenv(env, sk, cpy_env);
-        create_unsetenv(sk, env);
+        cpy_env = create_setenv(sk, cpy_env);
+        create_unsetenv(sk);
         create_env(sk);
         if (sk->check == 0)
             child_process(env, usr_bin, sk);

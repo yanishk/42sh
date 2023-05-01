@@ -23,8 +23,8 @@ void builtin_pipe(char **env, char ***cpy_env, stock_t *sk, char **end)
     } else {
         exit_sh(sk);
         create_cd(cpy_env, sk);
-        cpy_env = create_setenv(env, sk, cpy_env);
-        create_unsetenv(sk, env);
+        cpy_env = create_setenv(sk, cpy_env);
+        create_unsetenv(sk);
         create_env(sk);
     }
 }
@@ -76,13 +76,12 @@ char ***cpy_env, stock_t *sk)
 {
     int status = 0;
     sk->count_pipe = 0;
-    char *usr_bin;
     sk->index_pipe = 0;
     for (int i = 0; sk->array_pipe[i] != NULL; i += 1) {
         int pipe = my_strcomp_wo_len("|", sk->array_pipe[i]);
         if (pipe == 1)
             sk->count_pipe += 1;
-            sk->array_space = my_str_to_word_array(sk->array_pipe[i]);
+        sk->array_space = my_str_to_word_array(sk->array_pipe[i]);
     }
     builtin_pipe(env, cpy_env, sk, sk->array_space);
     sk->input = 0;

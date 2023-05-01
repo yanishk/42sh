@@ -21,11 +21,9 @@ int count_words_pipe(char const *str)
 {
     int count = 0;
     int var = 0;
-    int count_char = 0;
-    if (str == NULL) {
-        return 84;
-    }
 
+    if (str == NULL)
+        return 84;
     while (str[count] != '\0') {
         if (delimiter_pipe(str[count]) == 0
         && delimiter_pipe(str[count + 1]) == 1

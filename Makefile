@@ -7,6 +7,7 @@
 
 SRC	=	main.c 								\
 		src/get_input.c 					\
+		src/find_exec.c 					\
 		src/pars_env.c 						\
 		src/creating_cd.c 					\
 		src/create_path_oldpwd.c 			\

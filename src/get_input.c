@@ -17,8 +17,10 @@
 int exit_sh(stock_t *sk)
 {
     int res = my_strcomp(sk->array_space[0], "exit");
+
     if (res == 0)
         exit (0);
+    return 0;
 }
 
 void main_exec(char **env, stock_t *sk, char *path, char ***cpy_env)
@@ -44,14 +46,13 @@ void main_exec(char **env, stock_t *sk, char *path, char ***cpy_env)
     }
 }
 
-char* get_input(char **env, stock_t *sk, char *path, char ***cpy_env)
+void get_input(char **env, stock_t *sk, char *path, char ***cpy_env)
 {
     sk->buffer = NULL;
     size_t bufsize = 0;
-    size_t input = 0;
 
     my_putstr("$> ");
-    while ((input = getline(&sk->buffer, &bufsize, stdin)) != -1) {
+    while (getline(&sk->buffer, &bufsize, stdin) != -1) {
         if (my_strlen(sk->buffer) == 1) {
             my_putstr("$> ");
             continue;

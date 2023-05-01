@@ -11,10 +11,11 @@
 
 #include "my.h"
 
-int check_error(int status, stock_t *sk)
+void check_error(int status, stock_t *sk)
 {
     sk->sig = 0;
     sk->core = 0;
+
     if (WIFSIGNALED(status)) {
         sk->sig = WTERMSIG(status);
         if (WCOREDUMP(status)) {

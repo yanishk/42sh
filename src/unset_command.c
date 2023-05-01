@@ -14,10 +14,12 @@
 char** cpy_unset_func(stock_t *sk)
 {
     int x = 0;
+    char **cpy_unset = NULL;
+
     while (sk->print_env[x] != NULL) {
         x += 1;
     }
-    char **cpy_unset = malloc(sizeof(char *) * (x + 1));
+    cpy_unset = malloc(sizeof(char *) * (x + 1));
     x = 0;
     while (sk->print_env[x] != NULL) {
         cpy_unset[x] = my_strdup(sk->print_env[x]);
@@ -28,22 +30,22 @@ char** cpy_unset_func(stock_t *sk)
     return cpy_unset;
 }
 
-char** unset_cpy_env(char **env, stock_t *sk)
+char** unset_cpy_env(stock_t *sk)
 {
     char **cpy_unset = cpy_unset_func(sk);
     int index = 0;
     int y = 0;
     char *arg = sk->array_space[1];
+    char **unset = NULL;
+    int comp = 0;
 
-    while (cpy_unset[index] != NULL) {
+    while (cpy_unset[index] != NULL)
         index += 1;
-    }
-    char **unset = malloc(sizeof(char*) * index);
+    unset = malloc(sizeof(char*) * index);
     for (int x = 0; cpy_unset[x] != NULL; x += 1) {
-        int comp = my_strcomp_wo_len(cpy_unset[x], arg);
-        if (comp == 0) {
+        comp = my_strcomp_wo_len(cpy_unset[x], arg);
+        if (comp == 0)
             x += 1;
-        }
         unset[y] = my_strdup(cpy_unset[x]);
         y += 1;
     }
@@ -52,10 +54,9 @@ char** unset_cpy_env(char **env, stock_t *sk)
     return unset;
 }
 
-void unset_env(char **env, stock_t *sk)
+void unset_env(stock_t *sk)
 {
-
-    char **unset = unset_cpy_env(env, sk);
+    char **unset = unset_cpy_env(sk);
     int index = 0;
 
     while (unset[index] != NULL) {
@@ -67,13 +68,14 @@ void unset_env(char **env, stock_t *sk)
     }
 }
 
-char** create_unsetenv(stock_t *sk, char **env)
+char** create_unsetenv(stock_t *sk)
 {
     int res = my_strcomp_wo_len(sk->array_space[0], "unsetenv");
     char **cpy_unset = NULL;
+
     if (res == 0) {
         sk->check = 1;
-        unset_env(env, sk);
+        unset_env(sk);
     }
     return cpy_unset;
 }

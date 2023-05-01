@@ -18,14 +18,13 @@ char* pars_home(char ***cpy_env)
     int i = 0;
     char *home;
     int res;
-    if ((*cpy_env)[0] == NULL) {
+
+    if ((*cpy_env)[0] == NULL)
         return NULL;
-    }
     while ((*cpy_env)[i]) {
         res = my_strcomp_wo_len((*cpy_env)[i], "HOME=");
-        if (res == 0) {
+        if (res == 0)
             home = (*cpy_env)[i];
-        }
         i += 1;
     }
     return home;
@@ -33,25 +32,25 @@ char* pars_home(char ***cpy_env)
 
 char* find_equal_cd(char *home)
 {
-    int count_equal_cd = 0;
     int i = 0;
-    int index = 0; int index2 = 0;
+    int index = 0;
+    int index2 = 0;
+
     if (home != NULL) {
-        while (home[i] != '=') {
+        while (home[i] != '=')
             i += 1;
-        }
-        i += 1; index2 = i;
+        i += 1;
+        index2 = i;
         while (home[index2] != '\0')
             index2 += 1;
         char *home_path = malloc(sizeof(char) * (index2 + 1));
-        while (home[i] != '\0') {
+        for (; home[i] != '\0'; i += 1) {
             home_path[index] = home[i];
-            i += 1;
             index += 1;
         }
         home_path[index] = '\0';
         return home_path;
-        }
+    }
     return NULL;
 }
 
@@ -84,14 +83,12 @@ void cd_with_arg(stock_t *sk, char *home_path, char *old_path)
     struct stat info_file;
     int stat_re = stat(sk->array_space[1], &info_file);
     int check = 0;
-    check = check_error_cd(stat_re, info_file, sk, check);
 
-    if (sk->array_space[1][0] == '~') {
+    check = check_error_cd(stat_re, info_file, sk, check);
+    if (sk->array_space[1][0] == '~')
         chdir(home_path);
-    }
-    if (sk->array_space[1][0] == '-') {
+    if (sk->array_space[1][0] == '-')
         chdir(old_path);
-    }
 }
 
 void create_cd(char ***cpy_env, stock_t *sk)

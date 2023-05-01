@@ -12,7 +12,8 @@
 
 void control_c(int signal)
 {
-    my_putstr("\n$> ");
+    if (signal == SIGINT)
+        my_putstr("\n$> ");
 }
 
 int main(int ac, char **av, char **env)

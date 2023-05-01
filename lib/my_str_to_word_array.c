@@ -21,16 +21,13 @@ int count_words(char const *str)
 {
     int count = 0;
     int var = 0;
-    int count_char = 0;
-    if (str == NULL) {
-        return 84;
-    }
 
+    if (str == NULL)
+        return 84;
     while (str[count] != '\0') {
-        if (delimiter(str[count]) == 0 && delimiter(str[count + 1]) == 1
-        || delimiter(str[count]) == 0 && str[count + 1] == '\0') {
+        if ((delimiter(str[count]) == 0 && delimiter(str[count + 1]) == 1)
+        || (delimiter(str[count]) == 0 && str[count + 1] == '\0'))
             var++;
-        }
         count++;
     }
     return (var);

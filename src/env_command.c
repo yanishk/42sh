@@ -8,7 +8,7 @@
 #include "my.h"
 #include "stockage.h"
 
-int cpy_struct_env(char **cpy_env, stock_t *sk)
+void cpy_struct_env(char **cpy_env, stock_t *sk)
 {
     int index = 0;
     int x = 0;
@@ -24,7 +24,7 @@ int cpy_struct_env(char **cpy_env, stock_t *sk)
     sk->print_env[x] = NULL;
 }
 
-int cpy_struct_triple(char ***cpy_env, stock_t *sk)
+void cpy_struct_triple(char ***cpy_env, stock_t *sk)
 {
     int index = 0;
     int x = 0;
@@ -51,6 +51,7 @@ void print_env_setenv(stock_t *sk)
 void create_env(stock_t *sk)
 {
     int res = my_strcomp_wo_len(sk->buffer, "env");
+
     if (res == 0) {
         sk->check = 1;
         for (int index = 0; sk->print_env[index] != NULL; index += 1) {

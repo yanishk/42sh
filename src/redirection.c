@@ -26,23 +26,25 @@ void execute_redirect(char **env, char *path, char ***cpy_env, stock_t *sk)
         exit_sh(sk);
         usr_bin = find_dots(path, sk);
         create_cd(cpy_env, sk);
-        cpy_env = create_setenv(env, sk, cpy_env);
-        create_unsetenv(sk, env);
+        cpy_env = create_setenv(sk, cpy_env);
+        create_unsetenv(sk);
         create_env(sk);
         if (sk->check == 0)
             child_process(env, usr_bin, sk);
     }
 }
 
-int execute_command_redirect(char **env, char *path,
+void execute_command_redirect(char **env, char *path,
 char ***cpy_env, stock_t *sk)
 {
     int fd = 0;
+    int out = 0;
+
     if (sk->count_duck == 1)
         fd = open(sk->array_space_snd[0], O_WRONLY | O_TRUNC | O_CREAT, 422);
     if (sk->count_duck == 2)
         fd = open(sk->array_space_snd[0], O_WRONLY | O_APPEND | O_CREAT, 422);
-    int out = dup(1);
+    out = dup(1);
     dup2(fd, 1);
     execute_redirect(env, path, cpy_env, sk);
     dup2(out, 1);
