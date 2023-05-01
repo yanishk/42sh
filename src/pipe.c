@@ -20,8 +20,8 @@ void builtin_pipe(char **env, char ***cpy_env, stock_t *sk, char **end)
         create_cd(cpy_env, sk);
         if (sk->check == 0)
             exec_source_file(env, sk);
-    } else {
-        exit_sh(sk);
+    }
+    if (loop_buffer(end) == 0) {
         create_cd(cpy_env, sk);
         cpy_env = create_setenv(sk, cpy_env);
         create_unsetenv(sk);
@@ -49,8 +49,7 @@ void close_fds(int fd_1, stock_t *sk)
 
 int execute_pipe(stock_t *sk, char **env, char *path, char ***cpy_env)
 {
-    int status; int exec = 0;
-    int fds[2]; char *usr_bin;
+    int status; int exec = 0; int fds[2]; char *usr_bin;
 
     if (sk->index_pipe < (sk->count_pipe - 1))
         pipe(fds);
@@ -60,7 +59,8 @@ int execute_pipe(stock_t *sk, char **env, char *path, char ***cpy_env)
     pid_t pid = fork();
     if (pid == 0) {
         dup2(sk->input, 0); dup2(fds[1], 1); close(fds[0]);
-        sk->array_space = word_array_delimiter(sk->array_pipe[sk->index_pipe], " \t\n");
+        sk->array_space =
+        word_array_delim(sk->array_pipe[sk->index_pipe], " \t\n");
         usr_bin = find_dots(path, sk);
         exec = execve(usr_bin, sk->array_space, env); error_exec(exec, sk);
     } close_fds(fds[1], sk);
@@ -81,11 +81,11 @@ char ***cpy_env, stock_t *sk)
         int pipe = my_strcomp_wo_len("|", sk->array_pipe[i]);
         if (pipe == 1)
             sk->count_pipe += 1;
-        sk->array_space = word_array_delimiter(sk->array_pipe[i], " \t\n");
+        sk->array_space = word_array_delim(sk->array_pipe[i], " \t\n");
     }
     builtin_pipe(env, cpy_env, sk, sk->array_space);
     sk->input = 0;
-    if (sk->check != 1) {
+    if (sk->check != 1 && exit_shell(sk) == 0) {
         status = execute_pipe(sk, env, path, cpy_env);
         which_error(status, sk);
     }

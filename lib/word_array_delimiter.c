@@ -56,7 +56,7 @@ void word_array2(char const *str, char **array, char *delim, int cut_here)
     array[x + 1] = NULL;
 }
 
-char **word_array_delimiter(char const *str, char *delim)
+char **word_array_delim(char const *str, char *delim)
 {
     int cut_here = my_strlen(str);
     int check = is_delimiter(str[my_strlen(str) - 1], delim);

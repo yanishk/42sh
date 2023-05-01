@@ -65,8 +65,8 @@ void execute_command(char **env, char *path, char ***cpy_env, stock_t *sk)
         create_cd(cpy_env, sk);
         if (sk->check == 0)
             exec_source_file(env, sk);
-    } else {
-        exit_sh(sk);
+    }
+    if (loop_buffer(sk->array_space) == 0 && exit_shell(sk) == 0) {
         usr_bin = find_dots(path, sk);
         create_cd(cpy_env, sk);
         cpy_env = create_setenv(sk, cpy_env);

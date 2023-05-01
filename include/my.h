@@ -12,6 +12,7 @@
 
     int my_putstr(char const *str);
     int my_putchar(char c);
+    int my_getnbr(char const *str);
     char *my_strdup(char const *src);
     int my_strlen(char const *str);
     int my_strcomp(char *str, char *comp);
@@ -21,10 +22,13 @@
     int is_delimiter(char c, char *delim);
     int cut_str(char const *str, char *delim);
     int check_character(char const *str, char *delim, int cut_here);
-    char **word_array_delimiter(char const *str, char *delimiters);
+    char **word_array_delim(char const *str, char *delimiters);
+    void print_array(char **array);
+    void free_array(char **array);
 
     void print_prompt(void);
     void get_input(char **env, stock_t *sk, char *path, char ***cpy_env);
+    int exit_shell(stock_t *sk);
     int child_process(char** env, char *usr_bin, stock_t *sk);
     char* pars_env(char **cpy_env);
     char* find_dots(char *path, stock_t *sk);
@@ -61,7 +65,6 @@
     void print_env_setenv(stock_t *sk);
     void redirect_into_file(stock_t *sk, char **env,
     char *path, char ***cpy_env);
-    int exit_sh(stock_t *sk);
     void execute_command_redirect(char **env, char *path,
     char ***cpy_env, stock_t *sk);
     int exec_source_file(char **env, stock_t *sk);
