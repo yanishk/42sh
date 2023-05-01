@@ -13,18 +13,18 @@
 
 #include "my.h"
 
-char* pars_home(char ***cpy_env)
+char* pars_home(char  **cpy_env)
 {
     int i = 0;
     char *home;
     int res;
 
-    if ((*cpy_env)[0] == NULL)
+    if (cpy_env[0] == NULL)
         return NULL;
     while ((*cpy_env)[i]) {
-        res = my_strcomp_wo_len((*cpy_env)[i], "HOME=");
+        res = my_strcomp_wo_len(cpy_env[i], "HOME=");
         if (res == 0)
-            home = (*cpy_env)[i];
+            home = cpy_env[i];
         i += 1;
     }
     return home;
@@ -91,7 +91,7 @@ void cd_with_arg(stock_t *sk, char *home_path, char *old_path)
         chdir(old_path);
 }
 
-void create_cd(char ***cpy_env, stock_t *sk)
+void create_cd(char  **cpy_env, stock_t *sk)
 {
     struct stat info_file;
     static char *cwd = NULL;

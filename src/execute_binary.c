@@ -20,14 +20,14 @@ int child_process(char** env, char *usr_bin, stock_t *sk)
     int status = 0;
 
     if (pid == -1)
-        exit (84);
+        exit(84);
     if (pid == 0) {
         int exec = execve(usr_bin, sk->array_space, env);
         if (exec == -1) {
             my_putstr(sk->array_space[0]);
             my_putstr(": Command not found.");
             my_putchar('\n');
-            exit (0);
+            exit(0);
         }
     } else {
         wait (&status);
@@ -48,7 +48,7 @@ int exec_source_file(char **env, stock_t *sk)
         if (exec == -1) {
             my_putstr(sk->array_space[0]);
             my_putstr(": Command not found.\n");
-            exit (84);
+            exit(84);
         }
     } else {
         wait (&status);
@@ -57,7 +57,7 @@ int exec_source_file(char **env, stock_t *sk)
     return status;
 }
 
-void execute_command(char **env, char *path, char ***cpy_env, stock_t *sk)
+void execute_command(char **env, char *path, char  **cpy_env, stock_t *sk)
 {
     char *usr_bin = NULL;
 
@@ -69,9 +69,8 @@ void execute_command(char **env, char *path, char ***cpy_env, stock_t *sk)
     if (loop_buffer(sk->array_space) == 0 && exit_shell(sk) == 0) {
         usr_bin = find_dots(path, sk);
         create_cd(cpy_env, sk);
-        cpy_env = create_setenv(sk, cpy_env);
-        create_unsetenv(sk);
-        create_env(sk);
+        my_setenv(cpy_env, sk->array_space, sk);
+        my_unsetenv(cpy_env, sk->array_space, sk);
         if (sk->check == 0)
             child_process(env, usr_bin, sk);
     }

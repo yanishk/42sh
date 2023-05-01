@@ -25,16 +25,29 @@ void print_prompt(void)
         my_putstr("$> ");
 }
 
+char **set_cpy_env(char **env)
+{
+    char **cpy_env = NULL;
+
+    if (env[0] != NULL) {
+        cpy_env = env;
+    } else {
+        cpy_env = malloc(sizeof(char *));
+        cpy_env[0] = NULL;
+    }
+    return cpy_env;
+}
+
 int main(int ac, char **av, char **env)
 {
     if (ac != 1)
         return (84);
-    stock_t *sk = malloc(sizeof(stock_t));
+
     signal(SIGINT, control_c);
-    char **cpy_env = copy_env(env);
-    cpy_struct_env(cpy_env, sk);
+    stock_t *sk = malloc(sizeof(stock_t));
+    char **cpy_env = set_cpy_env(env);
     char *cwd = pars_env(cpy_env);
     char *path = remove_path(cwd);
-    get_input(env, sk, path, &cpy_env);
+    get_input(env, sk, path, cpy_env);
     return (0);
 }

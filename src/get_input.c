@@ -13,7 +13,7 @@
 #include <fcntl.h>
 #include "my.h"
 
-void main_exec(char **env, stock_t *sk, char *path, char ***cpy_env)
+void main_exec(char **env, stock_t *sk, char *path, char  **cpy_env)
 {
     for (sk->index = 0; sk->array_virg[sk->index]; sk->index += 1) {
         sk->count_duck = 0;
@@ -37,7 +37,7 @@ void main_exec(char **env, stock_t *sk, char *path, char ***cpy_env)
     }
 }
 
-void get_input(char **env, stock_t *sk, char *path, char ***cpy_env)
+void get_input(char **env, stock_t *sk, char *path, char  **cpy_env)
 {
     sk->buffer = NULL;
     size_t bufsize = 0;

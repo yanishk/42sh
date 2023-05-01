@@ -14,7 +14,7 @@
 
 #include "my.h"
 
-void execute_redirect(char **env, char *path, char ***cpy_env, stock_t *sk)
+void execute_redirect(char **env, char *path, char  **cpy_env, stock_t *sk)
 {
     char *usr_bin = NULL;
 
@@ -26,16 +26,15 @@ void execute_redirect(char **env, char *path, char ***cpy_env, stock_t *sk)
     if (loop_buffer(sk->array_space) == 0 && exit_shell(sk) == 0) {
         usr_bin = find_dots(path, sk);
         create_cd(cpy_env, sk);
-        cpy_env = create_setenv(sk, cpy_env);
-        create_unsetenv(sk);
-        create_env(sk);
+        my_setenv(cpy_env, sk->array_space, sk);
+        my_unsetenv(cpy_env, sk->array_space, sk);
         if (sk->check == 0)
             child_process(env, usr_bin, sk);
     }
 }
 
 void execute_command_redirect(char **env, char *path,
-char ***cpy_env, stock_t *sk)
+char  **cpy_env, stock_t *sk)
 {
     int fd = 0;
     int out = 0;

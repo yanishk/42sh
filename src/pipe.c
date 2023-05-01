@@ -14,7 +14,7 @@
 
 #include "my.h"
 
-void builtin_pipe(char **env, char ***cpy_env, stock_t *sk, char **end)
+void builtin_pipe(char **env, char  **cpy_env, stock_t *sk, char **end)
 {
     if (loop_buffer(end) == 1) {
         create_cd(cpy_env, sk);
@@ -23,9 +23,8 @@ void builtin_pipe(char **env, char ***cpy_env, stock_t *sk, char **end)
     }
     if (loop_buffer(end) == 0) {
         create_cd(cpy_env, sk);
-        cpy_env = create_setenv(sk, cpy_env);
-        create_unsetenv(sk);
-        create_env(sk);
+        my_setenv(cpy_env, sk->array_space, sk);
+        my_unsetenv(cpy_env, sk->array_space, sk);
     }
 }
 
@@ -35,7 +34,7 @@ void error_exec(int exec, stock_t *sk)
         my_putstr(sk->array_space[0]);
         my_putstr(": Command not found.");
         my_putchar('\n');
-        exit (0);
+        exit(0);
     }
 }
 
@@ -47,7 +46,7 @@ void close_fds(int fd_1, stock_t *sk)
         close(sk->input);
 }
 
-int execute_pipe(stock_t *sk, char **env, char *path, char ***cpy_env)
+int execute_pipe(stock_t *sk, char **env, char *path, char  **cpy_env)
 {
     int status; int exec = 0; int fds[2]; char *usr_bin;
 
@@ -72,7 +71,7 @@ int execute_pipe(stock_t *sk, char **env, char *path, char ***cpy_env)
 }
 
 int execute_command_pipe(char **env, char *path,
-char ***cpy_env, stock_t *sk)
+char  **cpy_env, stock_t *sk)
 {
     int status = 0;
     sk->count_pipe = 0;

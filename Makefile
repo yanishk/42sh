@@ -11,21 +11,21 @@ SRC	=	main.c 								\
 		src/pars_env.c 						\
 		src/creating_cd.c 					\
 		src/create_path_oldpwd.c 			\
-		src/env.c 							\
 		src/loop_buffer.c 					\
-		src/set_env.c 						\
 		src/error_handling.c 				\
-		src/env_command.c 					\
-		src/unset_command.c 				\
 		src/redirection.c					\
 		src/count_duck.c					\
 		src/execute_binary.c 				\
 		src/exit_shell.c 					\
 		src/pipe.c 							\
+		src/my_setenv.c 					\
+		src/my_unsetenv.c 					\
+		src/setenv_error_handling.c 		\
 		lib/word_array_delimiter.c 			\
 		lib/word_array_delimiter2.c 		\
 		lib/print_free_array.c 				\
 		lib/my_putstr.c 					\
+		lib/my_putstr_error.c 				\
 		lib/my_putchar.c 					\
 		lib/my_getnbr.c 					\
 		lib/my_strcomp.c 					\
@@ -34,6 +34,7 @@ SRC	=	main.c 								\
 		lib/my_strcat.c 					\
 		lib/my_strcpy.c 					\
 		lib/my_strdup.c 					\
+		lib/my_swap_str.c 					\
 
 CC ?= gcc
 
