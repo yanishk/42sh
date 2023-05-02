@@ -58,5 +58,9 @@
     int execute_command_pipe(char **env, char *path,
     char  **cpy_env, stock_t *sk);
     int execute_pipe(stock_t *sk, char **env, char *path, char  **cpy_env);
+    int read_alias(stock_t *sk);
+    char **my_str_to_word_array_alias(char const *str);
+    char **my_str_to_word_array_delim(char const *str, char delim);
+    void print_alias(char **tab);
 
 #endif /* !MY_H_ */

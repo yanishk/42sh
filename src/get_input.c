@@ -48,6 +48,7 @@ void get_input(char **env, stock_t *sk, char *path, char  **cpy_env)
             print_prompt();
             continue;
         }
+        read_alias(sk);
         sk->array_virg = word_array_delim(sk->buffer, ";");
         main_exec(env, sk, path, cpy_env);
         print_prompt();

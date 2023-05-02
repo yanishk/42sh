@@ -21,8 +21,12 @@ SRC	=	main.c 								\
 		src/my_setenv.c 					\
 		src/my_unsetenv.c 					\
 		src/setenv_error_handling.c 		\
+		src/alias/read_alias.c	\
+		src/alias/print_alias.c	\
 		lib/word_array_delimiter.c 			\
 		lib/word_array_delimiter2.c 		\
+		lib/my_str_to_word_array_alias.c 	\
+		lib/my_str_to_word_array_delim.c 	\
 		lib/print_free_array.c 				\
 		lib/my_putstr.c 					\
 		lib/my_putstr_error.c 				\
