@@ -21,7 +21,7 @@ char* pars_home(char  **cpy_env)
 
     if (cpy_env[0] == NULL)
         return NULL;
-    while ((*cpy_env)[i]) {
+    while (cpy_env[i]) {
         res = my_strcomp_wo_len(cpy_env[i], "HOME=");
         if (res == 0)
             home = cpy_env[i];

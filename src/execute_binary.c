@@ -14,7 +14,7 @@
 
 #include "my.h"
 
-int child_process(char** env, char *usr_bin, stock_t *sk)
+int child_process(char** cpy_env, char *usr_bin, stock_t *sk)
 {
     pid_t pid = fork();
     int status = 0;
@@ -22,7 +22,7 @@ int child_process(char** env, char *usr_bin, stock_t *sk)
     if (pid == -1)
         exit(84);
     if (pid == 0) {
-        int exec = execve(usr_bin, sk->array_space, env);
+        int exec = execve(usr_bin, sk->array_space, cpy_env);
         if (exec == -1) {
             my_putstr(sk->array_space[0]);
             my_putstr(": Command not found.");
@@ -36,7 +36,7 @@ int child_process(char** env, char *usr_bin, stock_t *sk)
     return status;
 }
 
-int exec_source_file(char **env, stock_t *sk)
+int exec_source_file(char **cpy_env, stock_t *sk)
 {
     pid_t pid = fork();
     int status = 0;
@@ -44,7 +44,7 @@ int exec_source_file(char **env, stock_t *sk)
     if (pid == -1)
         exit (84);
     if (pid == 0) {
-        int exec = execve(sk->array_space[0], sk->array_space, env);
+        int exec = execve(sk->array_space[0], sk->array_space, cpy_env);
         if (exec == -1) {
             my_putstr(sk->array_space[0]);
             my_putstr(": Command not found.\n");
@@ -57,7 +57,7 @@ int exec_source_file(char **env, stock_t *sk)
     return status;
 }
 
-void execute_command(char **env, char *path, char  **cpy_env, stock_t *sk)
+void execute_command(char *path, char  **cpy_env, stock_t *sk)
 {
     char *usr_bin = NULL;
     int is_a_source_file = loop_buffer(sk->array_space);
@@ -65,7 +65,7 @@ void execute_command(char **env, char *path, char  **cpy_env, stock_t *sk)
     if (is_a_source_file == 1) {
         create_cd(cpy_env, sk);
         if (sk->check == 0)
-            exec_source_file(env, sk);
+            exec_source_file(cpy_env, sk);
     }
     if (is_a_source_file == 0 && exit_shell(sk) == 0) {
         usr_bin = find_dots(path, sk);
@@ -73,6 +73,6 @@ void execute_command(char **env, char *path, char  **cpy_env, stock_t *sk)
         my_setenv(cpy_env, sk->array_space, sk);
         my_unsetenv(cpy_env, sk->array_space, sk);
         if (sk->check == 0)
-            child_process(env, usr_bin, sk);
+            child_process(cpy_env, usr_bin, sk);
     }
 }

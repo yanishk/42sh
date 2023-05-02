@@ -35,7 +35,7 @@
     void my_setenv(char **my_env, char **array, stock_t *sk);
     void my_unsetenv(char **my_env, char **array, stock_t *sk);
     int setenv_error_handling(char **array, int i);
-    void get_input(char **env, stock_t *sk, char *path, char  **cpy_env);
+    void get_input(stock_t *sk, char *path, char  **cpy_env);
     int exit_shell(stock_t *sk);
     int child_process(char** env, char *usr_bin, stock_t *sk);
     char* pars_env(char **cpy_env);
@@ -50,14 +50,13 @@
     void check_error(int status, stock_t *sk);
     void which_error(int status, stock_t *sk);
     int check_first_array(stock_t *sk, int check);
-    void execute_command_redirect(char **env, char *path,
+    void execute_command_redirect(char *path,
     char  **cpy_env, stock_t *sk);
     int exec_source_file(char **env, stock_t *sk);
     void count_duck(stock_t *sk);
-    void execute_command(char **env, char *path, char  **cpy_env, stock_t *sk);
-    int execute_command_pipe(char **env, char *path,
-    char  **cpy_env, stock_t *sk);
-    int execute_pipe(stock_t *sk, char **env, char *path, char  **cpy_env);
+    void execute_command(char *path, char  **cpy_env, stock_t *sk);
+    int execute_command_pipe(char *path, char  **cpy_env, stock_t *sk);
+    int execute_pipe(stock_t *sk, char *path, char  **cpy_env);
     int read_alias(stock_t *sk);
     char **my_str_to_word_array_alias(char const *str);
     char **my_str_to_word_array_delim(char const *str, char delim);

@@ -48,6 +48,6 @@ int main(int ac, char **av, char **env)
     char **cpy_env = set_cpy_env(env);
     char *cwd = pars_env(cpy_env);
     char *path = remove_path(cwd);
-    get_input(env, sk, path, cpy_env);
+    get_input(sk, path, cpy_env);
     return (0);
 }
