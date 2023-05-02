@@ -70,6 +70,8 @@ void execute_command(char *path, char  **cpy_env, stock_t *sk)
     if (is_a_source_file == 0 && exit_shell(sk) == 0) {
         usr_bin = find_dots(path, sk);
         create_cd(cpy_env, sk);
+        open_history_file(sk);
+        history_command(sk);
         my_setenv(cpy_env, sk->array_space, sk);
         my_unsetenv(cpy_env, sk->array_space, sk);
         if (sk->check == 0)

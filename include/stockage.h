@@ -27,6 +27,7 @@ typedef struct stock {
     int count_pipe;
     int index_pipe;
     int input;
+    int number_command;
 } stock_t;
 
 #endif

@@ -40,6 +40,7 @@ void main_exec(stock_t *sk, char *path, char  **cpy_env)
 void get_input(stock_t *sk, char *path, char  **cpy_env)
 {
     sk->buffer = NULL;
+    sk->number_command = 0;
     size_t bufsize = 0;
 
     print_prompt();

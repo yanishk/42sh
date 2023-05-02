@@ -29,6 +29,9 @@
     char **word_array_delim(char const *str, char *delimiters);
     void print_array(char **array);
     void free_array(char **array);
+    char *my_revstr(char *str);
+    char *my_int_to_str(int nb);
+    char *colorize_str(const char *str, const char *color);
 
     void print_prompt(void);
     char **init_old_env(char **my_env);
@@ -61,5 +64,7 @@
     char **my_str_to_word_array_alias(char const *str);
     char **my_str_to_word_array_delim(char const *str, char delim);
     void print_alias(char **tab);
+    int open_history_file(stock_t *sk);
+    int history_command(stock_t *sk);
 
 #endif /* !MY_H_ */

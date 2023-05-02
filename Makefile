@@ -17,12 +17,14 @@ SRC	=	main.c 								\
 		src/count_duck.c					\
 		src/execute_binary.c 				\
 		src/exit_shell.c 					\
+		src/history/history.c				\
+		src/history/history_command.c		\
 		src/pipe.c 							\
 		src/my_setenv.c 					\
 		src/my_unsetenv.c 					\
 		src/setenv_error_handling.c 		\
-		src/alias/read_alias.c	\
-		src/alias/print_alias.c	\
+		src/alias/read_alias.c				\
+		src/alias/print_alias.c				\
 		lib/word_array_delimiter.c 			\
 		lib/word_array_delimiter2.c 		\
 		lib/my_str_to_word_array_alias.c 	\
@@ -39,6 +41,9 @@ SRC	=	main.c 								\
 		lib/my_strcpy.c 					\
 		lib/my_strdup.c 					\
 		lib/my_swap_str.c 					\
+		lib/my_revstr.c						\
+		lib/my_int_to_str.c					\
+		lib/colorize_str.c					\
 
 CC ?= gcc
 
