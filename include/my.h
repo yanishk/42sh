@@ -67,5 +67,6 @@
     void add_alias(char **tab);
     int open_history_file(stock_t *sk);
     int history_command(stock_t *sk);
+    int get_last_command_number(stock_t *sk, char *buffer);
 
 #endif /* !MY_H_ */

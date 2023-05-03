@@ -25,6 +25,8 @@ int builtin_pipe(char  **cpy_env, stock_t *sk, char **end)
     }
     if (is_a_source_file == 0) {
         create_cd(cpy_env, sk);
+        open_history_file(sk);
+        history_command(sk);
         my_setenv(cpy_env, sk->array_space, sk);
         my_unsetenv(cpy_env, sk->array_space, sk);
     }

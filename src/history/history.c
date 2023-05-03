@@ -69,11 +69,20 @@ static int write_in_history_file(stock_t *sk, int fd)
 
 int open_history_file(stock_t *sk)
 {
+    struct stat sb;
     int fd = 0;
+    char *buffer = NULL;
 
-    fd = open(".history_log", O_WRONLY | O_APPEND | O_CREAT, 0644);
+    fd = open(".history_log", O_RDWR | O_APPEND | O_CREAT, 0644);
+    if (stat(".history_log", &sb) == -1)
+        return 84;
     if (fd == -1)
         return 84;
+    buffer = malloc((sizeof(char)) * (sb.st_size + 1));
+    if (read(fd, buffer, sb.st_size) == -1)
+        return 84;
+    buffer[sb.st_size] = '\0';
+    get_last_command_number(sk, buffer);
     if (write_in_history_file(sk, fd) == 84)
         return 84;
     if (close(fd) == -1)
