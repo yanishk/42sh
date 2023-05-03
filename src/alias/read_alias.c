@@ -81,9 +81,15 @@ int read_alias(stock_t *sk)
     char **tab = my_str_to_word_array_delim(buf, '\n');
     char *cmd = strdup(sk->buffer);
     cmd[my_strlen(sk->buffer) - 1] = '\0';
+    char **cmd_tab = my_str_to_word_array_delim(cmd, ' ');
 
     if (!strcmp(cmd, "alias")) {
         print_alias(tab);
+        return 0;
+    }
+    if (!strcmp(cmd_tab[0], "alias") && len_tab(cmd_tab) > 2) {
+        add_alias(cmd_tab);
+        return 1;
     }
     if (find_alias(sk, tab, cmd) == 0) {
         read_alias(sk);

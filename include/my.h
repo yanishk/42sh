@@ -64,6 +64,7 @@
     char **my_str_to_word_array_alias(char const *str);
     char **my_str_to_word_array_delim(char const *str, char delim);
     void print_alias(char **tab);
+    void add_alias(char **tab);
     int open_history_file(stock_t *sk);
     int history_command(stock_t *sk);
 

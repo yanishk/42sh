@@ -25,6 +25,7 @@ SRC	=	main.c 								\
 		src/setenv_error_handling.c 		\
 		src/alias/read_alias.c				\
 		src/alias/print_alias.c				\
+		src/alias/add_alias.c				\
 		lib/word_array_delimiter.c 			\
 		lib/word_array_delimiter2.c 		\
 		lib/my_str_to_word_array_alias.c 	\

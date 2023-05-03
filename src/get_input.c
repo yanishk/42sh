@@ -49,7 +49,10 @@ void get_input(stock_t *sk, char *path, char  **cpy_env)
             print_prompt();
             continue;
         }
-        read_alias(sk);
+        if (read_alias(sk) == 1) {
+            print_prompt();
+            continue;
+        }
         sk->array_virg = word_array_delim(sk->buffer, ";");
         main_exec(sk, path, cpy_env);
         print_prompt();
