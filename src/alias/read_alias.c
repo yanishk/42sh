@@ -38,61 +38,47 @@ static int len_tab(char **tab)
     return len;
 }
 
-static int change_cmd(stock_t *sk, char **ligne, int j)
+static int redirection_alias(stock_t *sk, char **cmd_tab, char **tab, int pass)
 {
-    char *new_cmd = malloc(sizeof(char) * 1000);
-    for (int k = 1; ligne[j + k] != NULL; k++) {
-        if (k > 1)
-            my_strcat(new_cmd, " ");
-        my_strcat(new_cmd, ligne[j + k]);
+    if (!strcmp(cmd_tab[0], "alias") && pass == 0 && len_tab(cmd_tab) < 2) {
+        print_alias(tab);
+        sk->check = 1;
+        free_array(tab);
+        return 1;
+    } else if (!strcmp(cmd_tab[0], "alias") && len_tab(cmd_tab) > 2) {
+        add_alias(cmd_tab);
+        sk->check = 1;
+        free_array(tab);
+        return 1;
     }
-    my_strcat(new_cmd, "\n\0");
-    strcpy(sk->buffer, new_cmd);
-    free(ligne);
-    return 0;
-}
+    if (!strcmp(cmd_tab[0], "alias")) {
+        sk->check = 1;
+        free_array(tab);
+        return 1;
+    }
 
-static int find_alias(stock_t *sk, char **tab, char *cmd)
-{
-    for (int i = 0; i < len_tab(tab); i++) {
-        char **ligne = word_array_delim(tab[i], "'= \t\n");
-        int len_ligne = len_tab(ligne);
-        int j = 0;
-        while (j < len_ligne && strcmp(ligne[j], cmd)) {
-            j++;
-        }
-        if (j != len_ligne && ligne[j + 1] && j == 1) {
-            change_cmd(sk, ligne, j);
-            free(tab);
-            free(cmd);
-            return 0;
-        }
-    }
-    free(tab);
-    free(cmd);
-    return 1;
+    return 0;
 }
 
 int read_alias(stock_t *sk)
 {
     char *buf = open_rc();
-    if (buf == NULL)
-        return 84;
-    char **tab = word_array_delim(buf, "\n");
+    int pass = 0;
+    char **tab;
     char *cmd = strdup(sk->buffer);
     cmd[my_strlen(sk->buffer) - 1] = '\0';
     char **cmd_tab = word_array_delim(cmd, " ");
 
-    if (!strcmp(cmd, "alias")) {
-        sk->check = 1;
-        print_alias(tab);
-    }
-    if (!strcmp(cmd_tab[0], "alias") && len_tab(cmd_tab) > 2) {
-        sk->check = 1;
-        add_alias(cmd_tab);
-    }
-    if (find_alias(sk, tab, cmd) == 0) {
-        read_alias(sk);
-    }
+    if (buf == NULL || buf[0] == '\0')
+        pass = 1;
+    else
+        tab = word_array_delim(buf, "\n");
+
+    if (redirection_alias(sk, cmd_tab, tab, pass) == 1)
+        pass = 1;
+    if (pass == 0 && sk->check == 0)
+        find_alias(sk, tab, cmd);
+    free_array(cmd_tab);
+    free(buf);
     return 0;
 }

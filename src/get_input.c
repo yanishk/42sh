@@ -34,12 +34,12 @@ void main_exec(stock_t *sk, char *path, char  **cpy_env)
             execute_command_reverse_redirect(path, cpy_env, sk);
         }
         if (sk->array_duck[1] == NULL && sk->array_reverse_duck[1] == NULL && sk->array_pipe[1] == NULL) {
-            sk->check = 0;
             sk->array_space =
             word_array_delim(sk->array_virg[sk->index], " \t\n");
             execute_command(path, cpy_env, sk);
         }
     }
+    free_main_exec(sk);
 }
 
 void get_input(stock_t *sk, char *path, char  **cpy_env)
@@ -54,12 +54,12 @@ void get_input(stock_t *sk, char *path, char  **cpy_env)
             print_prompt();
             continue;
         }
-        if (read_alias(sk) == 1) {
-            print_prompt();
-            continue;
-        }
+        sk->check = 0;
+        read_alias(sk);
         sk->array_virg = word_array_delim(sk->buffer, ";");
         main_exec(sk, path, cpy_env);
         print_prompt();
+        free_array(sk->array_virg);
     }
+    free(sk->buffer);
 }

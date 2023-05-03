@@ -27,6 +27,8 @@ SRC	=	main.c 									\
 		src/alias/read_alias.c					\
 		src/alias/print_alias.c					\
 		src/alias/add_alias.c					\
+		src/alias/change_cmd.c					\
+		src/free_all/free_main_exec.c			\
 		lib/word_array_delimiter.c 				\
 		lib/word_array_delimiter2.c 			\
 		lib/print_free_array.c 					\

@@ -112,4 +112,5 @@ void create_cd(char  **cpy_env, stock_t *sk)
         old_path = malloc(sizeof(char) * my_strlen(cwd + 1));
         old_path = cwd;
     }
+    free(cwd);
 }

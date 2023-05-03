@@ -65,9 +65,11 @@
     char **my_str_to_word_array_delim(char const *str, char delim);
     void print_alias(char **tab);
     void add_alias(char **tab);
+    int find_alias(stock_t *sk, char **tab, char *cmd);
     int open_history_file(stock_t *sk);
     int history_command(stock_t *sk);
     int get_last_command_number(stock_t *sk, char *buffer);
+    void free_main_exec(stock_t *sk);
 
     int execute_command_reverse_redirect(char *path,
     char  **cpy_env, stock_t *sk);

@@ -45,13 +45,13 @@ char* find_dots(char *path, stock_t *sk)
     while (array_path[x] != NULL) {
         path_concat = concat_malloc_path(sk, array_path, x);
         if (access(path_concat, X_OK) == 0) {
-            free(array_path);
+            free_array(array_path);
             return path_concat;
         }
         x += 1;
         free(path_concat);
     }
     array_path[x] = NULL;
-    free(array_path);
+    free_array(array_path);
     return NULL;
 }

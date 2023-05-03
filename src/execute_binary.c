@@ -76,5 +76,6 @@ void execute_command(char *path, char  **cpy_env, stock_t *sk)
         my_unsetenv(cpy_env, sk->array_space, sk);
         if (sk->check == 0)
             child_process(cpy_env, usr_bin, sk);
+        free(usr_bin);
     }
 }
