@@ -18,8 +18,10 @@ typedef struct stock {
     char **array_space;
     char **array_space_snd;
     char **array_duck;
+    char **array_reverse_duck;
     char **array_pipe;
     int count_duck;
+    int count_reverse_duck;
     int index;
     int fd[2];
     int old_fd;

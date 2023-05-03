@@ -16,7 +16,6 @@
 void main_exec(stock_t *sk, char *path, char  **cpy_env)
 {
     for (sk->index = 0; sk->array_virg[sk->index]; sk->index += 1) {
-        sk->count_duck = 0;
         count_duck(sk);
         sk->array_pipe = word_array_delim(sk->array_virg[sk->index], "|");
         if (sk->array_pipe[1] != NULL) {
@@ -28,7 +27,13 @@ void main_exec(stock_t *sk, char *path, char  **cpy_env)
             sk->array_space_snd = word_array_delim(sk->array_duck[1], " \t\n");
             execute_command_redirect(path, cpy_env, sk);
         }
-        if (sk->array_duck[1] == NULL && sk->array_pipe[1] == NULL) {
+        sk->array_reverse_duck = word_array_delim(sk->array_virg[sk->index], "<");
+        if (sk->array_reverse_duck[1] != NULL) {
+            sk->array_space = word_array_delim(sk->array_reverse_duck[0], " \t\n");
+            sk->array_space_snd = word_array_delim(sk->array_reverse_duck[1], " \t\n");
+            execute_command_reverse_redirect(path, cpy_env, sk);
+        }
+        if (sk->array_duck[1] == NULL && sk->array_reverse_duck[1] == NULL && sk->array_pipe[1] == NULL) {
             sk->check = 0;
             sk->array_space =
             word_array_delim(sk->array_virg[sk->index], " \t\n");

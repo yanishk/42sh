@@ -69,4 +69,7 @@
     int history_command(stock_t *sk);
     int get_last_command_number(stock_t *sk, char *buffer);
 
+    int execute_command_reverse_redirect(char *path,
+    char  **cpy_env, stock_t *sk);
+
 #endif /* !MY_H_ */
