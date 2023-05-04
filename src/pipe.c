@@ -38,8 +38,7 @@ void error_exec(int exec, stock_t *sk)
 {
     if (exec == -1) {
         my_putstr_error(sk->array_st.space[0]);
-        my_putstr_error(": Command not found.");
-        my_putchar('\n');
+        my_putstr_error(": Exec format error. Wrong Architecture.\n");
         exit(0);
     }
 }

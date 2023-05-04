@@ -22,12 +22,14 @@ typedef struct array_s {
     char **duck;
     char **reverse_duck;
     char **pipe;
+    char **array_logical_and;
 } array_t;
 
 typedef struct check_s {
     int is_a_builtin;
     int is_a_command;
     int is_command_exec;
+    int is_double_pipe;
     int count_duck;
     int count_reverse_duck;
     int number_command;

@@ -57,6 +57,7 @@
     char  **cpy_env, stock_t *sk);
     int exec_source_file(char **env, stock_t *sk);
     void count_duck(stock_t *sk, int i);
+    void count_pipe(stock_t *sk, int i);
     void execute_command(char *path, char  **cpy_env, stock_t *sk);
     int execute_command_pipe(char *path, char  **cpy_env, stock_t *sk);
     int read_alias(stock_t *sk);
@@ -70,4 +71,7 @@
     int execute_command_reverse_redirect(char *path,
     char  **cpy_env, stock_t *sk);
     void check_command(char *usr_bin, char *str, stock_t *sk);
+    void launch_pipe(char *path, char  **cpy_env, stock_t *sk);
+    void launch_ducks(char *path, char  **cpy_env, stock_t *sk);
+    void launch_command(char *path, char **cpy_env, stock_t *sk);
 #endif /* !MY_H_ */
