@@ -12,8 +12,8 @@
 
 int check_nb_arg(stock_t *sk, int check)
 {
-    if (sk->array_space[2] != NULL) {
-        if (sk->array_space[3] != NULL) {
+    if (sk->array_st.space[2] != NULL) {
+        if (sk->array_st.space[3] != NULL) {
             my_putstr_error("setenv: Too many arguments.\n");
             check = 1;
             return check;
@@ -27,20 +27,20 @@ int check_first_array(stock_t *sk, int check)
     check = check_nb_arg(sk, check);
     if (check != 0)
         return check;
-    if ((sk->array_space[1][0] < 'A' || sk->array_space[1][0] > 'Z')
-        && (sk->array_space[1][0] < 'a' || sk->array_space[1][0] > 'z')) {
+    if ((sk->array_st.space[1][0] < 'A' || sk->array_st.space[1][0] > 'Z')
+        && (sk->array_st.space[1][0] < 'a' || sk->array_st.space[1][0] > 'z')) {
         my_putstr_error("setenv: Variable name must begin with a letter.\n");
-        check = 1;
-        return check;
+        return 1;
     }
-    for (int i = 1; sk->array_space[1][i] != '\0'; i += 1) {
-        if ((sk->array_space[1][i] < 48 || sk->array_space[1][i] > 57)
-            && (sk->array_space[1][i] < 'A' || sk->array_space[1][0] > 'Z')
-            && (sk->array_space[1][0] < 'a' || sk->array_space[1][0] > 'z')) {
+    for (int i = 1; sk->array_st.space[1][i] != '\0'; i += 1) {
+        if ((sk->array_st.space[1][i] < 48 || sk->array_st.space[1][i] > 57)
+            && (sk->array_st.space[1][i] < 'A' ||
+            sk->array_st.space[1][0] > 'Z')
+            && (sk->array_st.space[1][0] < 'a' ||
+            sk->array_st.space[1][0] > 'z')) {
             my_putstr_error("setenv: Variable name must contain ");
             my_putstr_error("alphanumeric characters.\n");
-            check = 1;
-            return check;
+            return 1;
         }
     }
     return check;

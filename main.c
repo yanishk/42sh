@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
-
+#include <string.h>
 #include "my.h"
 
 void control_c(int signal)
@@ -45,11 +45,13 @@ int main(int ac, char **av, char **env)
 
     signal(SIGINT, control_c);
     stock_t *sk = malloc(sizeof(stock_t));
+    memset(sk, 0, sizeof(stock_t));
     char **cpy_env = set_cpy_env(env);
     char *cwd = pars_env(cpy_env);
     char *path = remove_path(cwd);
     get_input(sk, path, cpy_env);
     free(sk);
     free(path);
+
     return (0);
 }

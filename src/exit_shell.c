@@ -12,8 +12,8 @@
 
 int is_a_number(stock_t *sk, int x)
 {
-    for (int y = 0; sk->array_space[x][y] != '\0'; y++) {
-        if (sk->array_space[x][y] < '0' || sk->array_space[x][y] > '9')
+    for (int y = 0; sk->array_st.space[x][y] != '\0'; y++) {
+        if (sk->array_st.space[x][y] < '0' || sk->array_st.space[x][y] > '9')
             return (1);
     }
     return (0);
@@ -21,23 +21,23 @@ int is_a_number(stock_t *sk, int x)
 
 void exit_shell(stock_t *sk)
 {
-    int is_exit = my_strcomp("exit", sk->array_space[0]);
+    int is_exit = my_strcomp("exit", sk->array_st.space[0]);
     int x = 0;
     int nb = 0;
 
-    while (sk->array_space[x] != NULL) {
+    while (sk->array_st.space[x] != NULL) {
         x += 1;
     }
     if (is_exit == 0 && x == 1) {
-        free_array(sk->array_space);
+        free_array(sk->array_st.space);
         exit(0);
     }
     if (is_exit == 0 && x == 2 && is_a_number(sk, (x - 1)) == 0) {
-        nb = my_getnbr(sk->array_space[1]);
-        free_array(sk->array_space);
+        nb = my_getnbr(sk->array_st.space[1]);
+        free_array(sk->array_st.space);
         exit(nb);
     } else if (is_exit == 0) {
         write(2, "exit: Expression Syntax.\n", 26);
-        sk->is_a_builtin = 1;
+        sk->check_st.is_a_builtin = 1;
     }
 }

@@ -7,15 +7,15 @@
 
 #include "my.h"
 
-void count_duck(stock_t *sk)
+void count_duck(stock_t *sk, int i)
 {
-    sk->count_duck = 0;
-    sk->count_reverse_duck = 0;
+    sk->check_st.count_duck = 0;
+    sk->check_st. count_reverse_duck = 0;
 
-    for (int j = 0; sk->array_virg[sk->index][j]; j += 1) {
-        if (sk->array_virg[sk->index][j] == '>')
-            sk->count_duck += 1;
-        if (sk->array_virg[sk->index][j] == '<')
-            sk->count_reverse_duck += 1;
+    for (int j = 0; sk->array_st.virg[i][j]; j += 1) {
+        if (sk->array_st.virg[i][j] == '>')
+            sk->check_st.count_duck += 1;
+        if (sk->array_st.virg[i][j] == '<')
+            sk->check_st. count_reverse_duck += 1;
     }
 }

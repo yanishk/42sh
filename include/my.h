@@ -26,9 +26,7 @@
     int is_delimiter(char c, char *delim);
     int cut_str(char const *str, char *delim);
     int check_character(char const *str, char *delim, int cut_here);
-    char **word_array_delim(char const *str, char *delimiters);
-    char **my_str_to_word_array_alias(char const *str);
-    char **my_str_to_word_array_delim(char const *str, char delim);
+    char **word_array(char const *str, char *delimiters);
     void print_array(char **array);
     void free_array(char **array);
     char *my_revstr(char *str);
@@ -58,7 +56,7 @@
     void execute_command_redirect(char *path,
     char  **cpy_env, stock_t *sk);
     int exec_source_file(char **env, stock_t *sk);
-    void count_duck(stock_t *sk);
+    void count_duck(stock_t *sk, int i);
     void execute_command(char *path, char  **cpy_env, stock_t *sk);
     int execute_command_pipe(char *path, char  **cpy_env, stock_t *sk);
     int read_alias(stock_t *sk);

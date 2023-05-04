@@ -42,7 +42,7 @@ static int print_array_history(char **array, int i)
     char **tab = NULL;
     int z = 0;
 
-    tab = word_array_delim(array[i], " ");
+    tab = word_array(array[i], " ");
     if (tab == NULL)
         return 84;
     while (tab[z] != NULL) {
@@ -78,11 +78,11 @@ int history_command(stock_t *sk)
     buffer = copy_content_file(".history_log");
     if (buffer == NULL)
         return 84;
-    array = word_array_delim(buffer, "\n");
+    array = word_array(buffer, "\n");
     if (array == NULL)
         return 84;
-    if (my_strcomp(sk->buffer, "history\n") == 0) {
-        sk->is_a_builtin = 1;
+    if (my_strcomp(sk->array_st.buffer, "history\n") == 0) {
+        sk->check_st.is_a_builtin = 1;
         if (history_command_loop(array) == 84)
             return 84;
     }

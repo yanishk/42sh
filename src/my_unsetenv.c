@@ -56,10 +56,10 @@ void my_unsetenv(char **cpy_env, char **array, stock_t *sk)
 
     for (i = 0; array[i] != NULL; i++) {}
     if (is_unsetenv == 0) {
-        sk->is_a_builtin = 1;
+        sk->check_st.is_a_builtin = 1;
         if (i == 1) {
             my_putstr_error("unsetenv: Too few arguments.\n");
-            sk->is_command_executed = 1;
+            sk->check_st.is_command_exec = 1;
         }
         if (i >= 2)
             is_in_myenv = exist_in_env(cpy_env, array);

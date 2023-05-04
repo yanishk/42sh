@@ -42,17 +42,17 @@ static int redirection_alias(stock_t *sk, char **cmd_tab, char **tab, int pass)
 {
     if (!strcmp(cmd_tab[0], "alias") && pass == 0 && len_tab(cmd_tab) < 2) {
         print_alias(tab);
-        sk->is_a_builtin = 1;
+        sk->check_st.is_a_builtin = 1;
         free_array(tab);
         return 1;
     } else if (!strcmp(cmd_tab[0], "alias") && len_tab(cmd_tab) > 2) {
         add_alias(cmd_tab);
-        sk->is_a_builtin = 1;
+        sk->check_st.is_a_builtin = 1;
         free_array(tab);
         return 1;
     }
     if (!strcmp(cmd_tab[0], "alias")) {
-        sk->is_a_builtin = 1;
+        sk->check_st.is_a_builtin = 1;
         free_array(tab);
         return 1;
     }
@@ -65,18 +65,18 @@ int read_alias(stock_t *sk)
     char *buf = open_rc();
     int pass = 0;
     char **tab;
-    char *cmd = strdup(sk->buffer);
-    cmd[my_strlen(sk->buffer) - 1] = '\0';
-    char **cmd_tab = word_array_delim(cmd, " ");
+    char *cmd = strdup(sk->array_st.buffer);
+    cmd[my_strlen(sk->array_st.buffer) - 1] = '\0';
+    char **cmd_tab = word_array(cmd, " ");
 
     if (buf == NULL || buf[0] == '\0')
         pass = 1;
     else
-        tab = word_array_delim(buf, "\n");
+        tab = word_array(buf, "\n");
 
     if (redirection_alias(sk, cmd_tab, tab, pass) == 1)
         pass = 1;
-    if (pass == 0 && sk->is_a_builtin == 0)
+    if (pass == 0 && sk->check_st.is_a_builtin == 0)
         find_alias(sk, tab, cmd);
     free_array(cmd_tab);
     free(buf);
