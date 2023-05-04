@@ -22,8 +22,8 @@ int loop_buffer(char **array)
         }
         if ((array[0][index] == '/' && access(array[0], X_OK) != 0) ||
             (array[0][index] == '/' && ((sb.st_mode & S_IFMT) != S_IFREG))) {
-            my_putstr(array[0]);
-            my_putstr(": Permission denied.\n");
+            my_putstr_error(array[0]);
+            my_putstr_error(": Permission denied.\n");
             return (2);
         }
     }

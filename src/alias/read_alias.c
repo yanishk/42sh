@@ -42,17 +42,17 @@ static int redirection_alias(stock_t *sk, char **cmd_tab, char **tab, int pass)
 {
     if (!strcmp(cmd_tab[0], "alias") && pass == 0 && len_tab(cmd_tab) < 2) {
         print_alias(tab);
-        sk->check = 1;
+        sk->is_a_builtin = 1;
         free_array(tab);
         return 1;
     } else if (!strcmp(cmd_tab[0], "alias") && len_tab(cmd_tab) > 2) {
         add_alias(cmd_tab);
-        sk->check = 1;
+        sk->is_a_builtin = 1;
         free_array(tab);
         return 1;
     }
     if (!strcmp(cmd_tab[0], "alias")) {
-        sk->check = 1;
+        sk->is_a_builtin = 1;
         free_array(tab);
         return 1;
     }
@@ -76,7 +76,7 @@ int read_alias(stock_t *sk)
 
     if (redirection_alias(sk, cmd_tab, tab, pass) == 1)
         pass = 1;
-    if (pass == 0 && sk->check == 0)
+    if (pass == 0 && sk->is_a_builtin == 0)
         find_alias(sk, tab, cmd);
     free_array(cmd_tab);
     free(buf);

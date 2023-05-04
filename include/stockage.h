@@ -10,7 +10,9 @@
 
 typedef struct stock {
     char **print_env;
-    int check;
+    int is_a_builtin;
+    int is_a_command;
+    int is_command_executed;
     char *buffer;
     int sig;
     int core;

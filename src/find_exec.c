@@ -22,7 +22,7 @@ static char* concat_malloc_path(stock_t *sk, char **array_path, int x)
 
     len_array = my_strlen(array_path[x]);
     if (sk->array_space[0] == NULL) {
-        my_putstr("Invalid null command.\n");
+        my_putstr_error("Invalid null command.\n");
         return NULL;
     }
     len_arg = my_strlen(sk->array_space[0]);

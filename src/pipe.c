@@ -20,7 +20,7 @@ int builtin_pipe(char  **cpy_env, stock_t *sk, char **end)
 
     if (is_a_source_file == 1) {
         create_cd(cpy_env, sk);
-        if (sk->check == 0)
+        if (sk->is_a_builtin == 0)
             exec_source_file(cpy_env, sk);
     }
     if (is_a_source_file == 0) {
@@ -29,6 +29,7 @@ int builtin_pipe(char  **cpy_env, stock_t *sk, char **end)
         history_command(sk);
         my_setenv(cpy_env, sk->array_space, sk);
         my_unsetenv(cpy_env, sk->array_space, sk);
+        exit_shell(sk);
     }
     return is_a_source_file;
 }
@@ -36,8 +37,8 @@ int builtin_pipe(char  **cpy_env, stock_t *sk, char **end)
 void error_exec(int exec, stock_t *sk)
 {
     if (exec == -1) {
-        my_putstr(sk->array_space[0]);
-        my_putstr(": Command not found.");
+        my_putstr_error(sk->array_space[0]);
+        my_putstr_error(": Command not found.");
         my_putchar('\n');
         exit(0);
     }
@@ -90,7 +91,7 @@ char  **cpy_env, stock_t *sk)
     }
     is_a_source_file = builtin_pipe(cpy_env, sk, sk->array_space);
     sk->input = 0;
-    if (sk->check != 1 && is_a_source_file == 0 && exit_shell(sk) == 0) {
+    if (sk->is_a_builtin == 0 && is_a_source_file == 0) {
         status = execute_pipe(sk, path, cpy_env);
         which_error(status, sk);
     }

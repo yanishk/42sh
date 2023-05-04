@@ -27,6 +27,8 @@
     int cut_str(char const *str, char *delim);
     int check_character(char const *str, char *delim, int cut_here);
     char **word_array_delim(char const *str, char *delimiters);
+    char **my_str_to_word_array_alias(char const *str);
+    char **my_str_to_word_array_delim(char const *str, char delim);
     void print_array(char **array);
     void free_array(char **array);
     char *my_revstr(char *str);
@@ -39,7 +41,7 @@
     void my_unsetenv(char **my_env, char **array, stock_t *sk);
     int setenv_error_handling(char **array, int i);
     void get_input(stock_t *sk, char *path, char  **cpy_env);
-    int exit_shell(stock_t *sk);
+    void exit_shell(stock_t *sk);
     int child_process(char** env, char *usr_bin, stock_t *sk);
     char* pars_env(char **cpy_env);
     char* find_dots(char *path, stock_t *sk);
@@ -59,10 +61,7 @@
     void count_duck(stock_t *sk);
     void execute_command(char *path, char  **cpy_env, stock_t *sk);
     int execute_command_pipe(char *path, char  **cpy_env, stock_t *sk);
-    int execute_pipe(stock_t *sk, char *path, char  **cpy_env);
     int read_alias(stock_t *sk);
-    char **my_str_to_word_array_alias(char const *str);
-    char **my_str_to_word_array_delim(char const *str, char delim);
     void print_alias(char **tab);
     void add_alias(char **tab);
     int find_alias(stock_t *sk, char **tab, char *cmd);
@@ -70,8 +69,7 @@
     int history_command(stock_t *sk);
     int get_last_command_number(stock_t *sk, char *buffer);
     void free_main_exec(stock_t *sk);
-
     int execute_command_reverse_redirect(char *path,
     char  **cpy_env, stock_t *sk);
-
+    void check_command(char *usr_bin, char *str, stock_t *sk);
 #endif /* !MY_H_ */

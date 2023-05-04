@@ -24,13 +24,13 @@ int child_process(char** cpy_env, char *usr_bin, stock_t *sk)
     if (pid == 0) {
         int exec = execve(usr_bin, sk->array_space, cpy_env);
         if (exec == -1) {
-            my_putstr(sk->array_space[0]);
-            my_putstr(": Command not found.");
+            my_putstr_error(sk->array_space[0]);
+            my_putstr_error(": Command not found\n.");
             my_putchar('\n');
             exit(0);
         }
     } else {
-        wait (&status);
+        wait(&status);
     }
     which_error(status, sk);
     return status;
@@ -46,8 +46,8 @@ int exec_source_file(char **cpy_env, stock_t *sk)
     if (pid == 0) {
         int exec = execve(sk->array_space[0], sk->array_space, cpy_env);
         if (exec == -1) {
-            my_putstr(sk->array_space[0]);
-            my_putstr(": Command not found.\n");
+            my_putstr_error(sk->array_space[0]);
+            my_putstr_error(": Command not found.\n");
             exit(84);
         }
     } else {
@@ -57,25 +57,33 @@ int exec_source_file(char **cpy_env, stock_t *sk)
     return status;
 }
 
+void check_builtins(char **cpy_env, stock_t *sk)
+{
+    create_cd(cpy_env, sk);
+    open_history_file(sk);
+    history_command(sk);
+    my_setenv(cpy_env, sk->array_space, sk);
+    my_unsetenv(cpy_env, sk->array_space, sk);
+    exit_shell(sk);
+}
+
 void execute_command(char *path, char  **cpy_env, stock_t *sk)
 {
     char *usr_bin = NULL;
     int is_a_source_file = loop_buffer(sk->array_space);
+    sk->is_a_builtin = 0;
 
     if (is_a_source_file == 1) {
         create_cd(cpy_env, sk);
-        if (sk->check == 0)
+        if (sk->is_a_builtin == 0)
             exec_source_file(cpy_env, sk);
     }
-    if (is_a_source_file == 0 && exit_shell(sk) == 0) {
+    if (is_a_source_file == 0) {
         usr_bin = find_dots(path, sk);
-        create_cd(cpy_env, sk);
-        open_history_file(sk);
-        history_command(sk);
-        my_setenv(cpy_env, sk->array_space, sk);
-        my_unsetenv(cpy_env, sk->array_space, sk);
-        if (sk->check == 0)
-            child_process(cpy_env, usr_bin, sk);
+        check_builtins(cpy_env, sk);
+        check_command(usr_bin, sk->array_space[0], sk);
+        if (sk->is_a_builtin == 0 && sk->is_a_command == 1)
+            sk->is_command_executed = child_process(cpy_env, usr_bin, sk);
         free(usr_bin);
     }
 }

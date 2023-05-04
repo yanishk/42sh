@@ -19,7 +19,7 @@ int is_a_number(stock_t *sk, int x)
     return (0);
 }
 
-int exit_shell(stock_t *sk)
+void exit_shell(stock_t *sk)
 {
     int is_exit = my_strcomp("exit", sk->array_space[0]);
     int x = 0;
@@ -38,7 +38,6 @@ int exit_shell(stock_t *sk)
         exit(nb);
     } else if (is_exit == 0) {
         write(2, "exit: Expression Syntax.\n", 26);
-        return (1);
+        sk->is_a_builtin = 1;
     }
-    return (0);
 }

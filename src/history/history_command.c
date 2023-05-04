@@ -82,7 +82,7 @@ int history_command(stock_t *sk)
     if (array == NULL)
         return 84;
     if (my_strcomp(sk->buffer, "history\n") == 0) {
-        sk->check = 1;
+        sk->is_a_builtin = 1;
         if (history_command_loop(array) == 84)
             return 84;
     }

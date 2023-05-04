@@ -57,21 +57,21 @@ char* find_equal_cd(char *home)
 int check_error_cd(int stat_re, struct stat info_file, stock_t *sk, int check)
 {
     if (sk->array_space[1] != NULL && sk->array_space[2] != NULL) {
-        my_putstr("cd: Too many arguments.\n");
-        check = 1;
-        return check;
+        my_putstr_error("cd: Too many arguments.\n");
+        check = 1; return check;
     }
     if (stat_re == -1
     && sk->array_space[1][0] != '~' && sk->array_space[1][0] != '-') {
-        my_putstr(sk->array_space[1]);
-        my_putstr(": No such file or directory.\n");
+        my_putstr_error(sk->array_space[1]);
+        my_putstr_error(": No such file or directory.\n");
         check = 1; return check;
     }
     if (sk->array_space[1][0] != '~' && sk->array_space[1][0] != '-') {
         int res = chdir(sk->array_space[1]);
         if ((info_file.st_mode & S_IFMT) != S_IFDIR && res == -1
             && sk->array_space[1] != NULL && check != 1) {
-            my_putstr(sk->array_space[1]); my_putstr(": Not a directory.\n");
+            my_putstr_error(sk->array_space[1]);
+            my_putstr_error(": Not a directory.\n");
             check = 1; return check;
         }
     }
@@ -85,6 +85,9 @@ void cd_with_arg(stock_t *sk, char *home_path, char *old_path)
     int check = 0;
 
     check = check_error_cd(stat_re, info_file, sk, check);
+
+    if (check == 1)
+        sk->is_command_executed = 1;
     if (sk->array_space[1][0] == '~')
         chdir(home_path);
     if (sk->array_space[1][0] == '-')
@@ -100,7 +103,7 @@ void create_cd(char  **cpy_env, stock_t *sk)
     cwd = pars_old();
 
     if (res == 0) {
-        sk->check = 1;
+        sk->is_a_builtin = 1;
         stat(sk->array_space[1], &info_file);
         char *home = pars_home(cpy_env);
         char *home_path = find_equal_cd(home);

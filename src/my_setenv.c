@@ -67,9 +67,11 @@ void my_setenv(char **cpy_env, char **array, stock_t *sk)
     for (i = 0; array[i] != NULL; i++) {
     }
     if (is_setenv == 0) {
-        sk->check = 1;
-        if (setenv_error_handling(array, i) != 0)
+        sk->is_a_builtin = 1;
+        if (setenv_error_handling(array, i) != 0) {
+            sk->is_command_executed = 1;
             return;
+        }
         if (i >= 2) {
             old_env = init_old_env(cpy_env);
             add_or_change_line(old_env, cpy_env, array);
