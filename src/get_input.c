@@ -51,10 +51,11 @@ char **array_logical_and)
 
 void main_exec(stock_t *sk, char *path, char  **cpy_env)
 {
+    char **array_logical_and = NULL;
     sk->is_a_command = 1;
     sk->is_command_executed = 0;
-    char **array_logical_and = NULL;
-
+    if (sk->is_a_builtin == 84)
+        return;
     for (sk->index = 0; sk->array_virg[sk->index]; sk->index += 1) {
         count_duck(sk);
         sk->array_pipe = word_array_delim(sk->array_virg[sk->index], "|");
@@ -84,8 +85,8 @@ void get_input(stock_t *sk, char *path, char  **cpy_env)
             continue;
         }
         sk->is_a_builtin = 0;
-        read_alias(sk);
         sk->array_virg = word_array_delim(sk->buffer, ";");
+        read_alias(sk, 0);
         main_exec(sk, path, cpy_env);
         print_prompt();
         free_array(sk->array_virg);
