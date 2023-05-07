@@ -9,7 +9,6 @@ SRC	=	main.c 									\
 		src/get_input.c 						\
 		src/launch_commands.c 					\
 		src/find_exec.c 						\
-		src/pars_env.c 							\
 		src/creating_cd.c 						\
 		src/create_path_oldpwd.c 				\
 		src/loop_buffer.c 						\
@@ -22,14 +21,16 @@ SRC	=	main.c 									\
 		src/history/history_command.c			\
 		src/history/get_last_command_number.c 	\
 		src/pipe.c 								\
-		src/my_setenv.c 						\
-		src/my_unsetenv.c 						\
-		src/setenv_error_handling.c 			\
 		src/alias/read_alias.c					\
 		src/alias/print_alias.c					\
 		src/alias/add_alias.c					\
 		src/alias/change_cmd.c					\
 		src/free_all/free_main_exec.c			\
+		src/env/setenv_error_handling.c 		\
+		src/env/pars_env.c 						\
+		src/env/my_unsetenv.c 					\
+		src/env/my_setenv.c 					\
+		src/env/print_env.c						\
 		lib/word_array_delimiter.c 				\
 		lib/word_array_delimiter2.c 			\
 		lib/print_free_array.c 					\

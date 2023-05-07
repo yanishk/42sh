@@ -14,7 +14,7 @@
 
 #include "my.h"
 
-int builtin_pipe(char  **cpy_env, stock_t *sk, char **end)
+int builtin_pipe(char **cpy_env, stock_t *sk, char **end)
 {
     int is_a_source_file = loop_buffer(end);
 
@@ -27,6 +27,7 @@ int builtin_pipe(char  **cpy_env, stock_t *sk, char **end)
         create_cd(cpy_env, sk);
         open_history_file(sk);
         history_command(sk);
+        print_env(sk->array_st.space, cpy_env);
         my_setenv(cpy_env, sk->array_st.space, sk);
         my_unsetenv(cpy_env, sk->array_st.space, sk);
         exit_shell(sk);
@@ -75,19 +76,22 @@ int execute_pipe(stock_t *sk, char *path, char  **cpy_env)
     } waitpid(pid, &status, 0); return status;
 }
 
-int execute_command_pipe(char *path,
+int execute_command_pipe(char *cwd, char *path,
 char  **cpy_env, stock_t *sk)
 {
     int is_a_source_file = 0;
     int status = 0;
     sk->pipe_st.count_pipe = 0;
     sk->pipe_st.index_pipe = 0;
+
     for (int i = 0; sk->array_st.pipe[i] != NULL; i += 1) {
         int pipe = my_strcomp_wo_len("|", sk->array_st.pipe[i]);
         if (pipe == 1)
             sk->pipe_st.count_pipe += 1;
         sk->array_st.space = word_array(sk->array_st.pipe[i], " \t\n");
     }
+    cwd = pars_env(cpy_env);
+    path = remove_path(cwd);
     is_a_source_file = builtin_pipe(cpy_env, sk, sk->array_st.space);
     sk->pipe_st.input = 0;
     if (sk->check_st.is_a_builtin == 0 && is_a_source_file == 0) {

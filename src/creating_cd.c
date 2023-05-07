@@ -100,8 +100,8 @@ void create_cd(char  **cpy_env, stock_t *sk)
     static char *cwd = NULL;
     static char *old_path = NULL;
     int res = my_strcomp_wo_len(sk->array_st.space[0], "cd");
-    cwd = pars_old();
 
+    cwd = pars_old();
     if (res == 0) {
         sk->check_st.is_a_builtin = 1;
         stat(sk->array_st.space[1], &info_file);
@@ -115,5 +115,4 @@ void create_cd(char  **cpy_env, stock_t *sk)
         old_path = malloc(sizeof(char) * my_strlen(cwd + 1));
         old_path = cwd;
     }
-    free(cwd);
 }

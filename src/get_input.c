@@ -13,7 +13,7 @@
 #include <fcntl.h>
 #include "my.h"
 
-void main_exec(stock_t *sk, char *path, char  **cpy_env)
+void main_exec(stock_t *sk, char *cwd, char *path, char  **cpy_env)
 {
     sk->check_st.is_a_command = 1;
     sk->check_st.is_command_exec = 0;
@@ -26,14 +26,14 @@ void main_exec(stock_t *sk, char *path, char  **cpy_env)
         sk->array_st.array_logical_and = word_array(sk->array_st.virg[i], "&");
         count_duck(sk, i);
         count_pipe(sk, i);
-        launch_pipe(path, cpy_env, sk);
-        launch_ducks(path, cpy_env, sk);
-        launch_command(path, cpy_env, sk);
+        launch_pipe(cwd, path, cpy_env, sk);
+        launch_ducks(cwd, path, cpy_env, sk);
+        launch_command(cwd, path, cpy_env, sk);
     }
     free_main_exec(sk);
 }
 
-void get_input(stock_t *sk, char *path, char  **cpy_env)
+void get_input(stock_t *sk, char *cwd, char *path, char  **cpy_env)
 {
     sk->array_st.buffer = NULL;
     sk->check_st.number_command = 0;
@@ -48,7 +48,7 @@ void get_input(stock_t *sk, char *path, char  **cpy_env)
         sk->check_st.is_a_builtin = 0;
         read_alias(sk);
         sk->array_st.virg = word_array(sk->array_st.buffer, ";");
-        main_exec(sk, path, cpy_env);
+        main_exec(sk, cwd, path, cpy_env);
         print_prompt();
         free_array(sk->array_st.virg);
     }

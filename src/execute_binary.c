@@ -65,17 +65,20 @@ void check_builtins(char **cpy_env, stock_t *sk)
     create_cd(cpy_env, sk);
     open_history_file(sk);
     history_command(sk);
+    print_env(sk->array_st.space, cpy_env);
     my_setenv(cpy_env, sk->array_st.space, sk);
     my_unsetenv(cpy_env, sk->array_st.space, sk);
     exit_shell(sk);
 }
 
-void execute_command(char *path, char  **cpy_env, stock_t *sk)
+void execute_command(char *cwd, char *path, char  **cpy_env, stock_t *sk)
 {
     char *usr_bin = NULL;
     int is_a_source_file = loop_buffer(sk->array_st.space);
-    sk->check_st.is_a_builtin = 0;
 
+    sk->check_st.is_a_builtin = 0;
+    cwd = pars_env(cpy_env);
+    path = remove_path(cwd);
     if (is_a_source_file == 1) {
         create_cd(cpy_env, sk);
         if (sk->check_st.is_a_builtin == 0)
