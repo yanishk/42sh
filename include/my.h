@@ -78,5 +78,6 @@
     char *copy_content_file(char *file);
     int help_flag(void);
     int list_flag(void);
+    int list_op_flag(void);
 
 #endif /* !MY_H_ */

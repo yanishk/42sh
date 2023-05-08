@@ -13,7 +13,7 @@ int help_flag(void)
     char *help = "my_sh, version 5.2.15(1)-release\n"
     "Usage:  bash [GNU option]\n"
     "GNU options:\n"
-    "--help\n--list\n";
+    "--help\n--list\n--list-op\n";
     char *str =
     "You can run my_sh without option for use it\n";
 

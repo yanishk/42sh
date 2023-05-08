@@ -9,6 +9,16 @@
 #include "my.h"
 #include <stdio.h>
 
+int list_op_flag(void)
+{
+    char *buffer = copy_content_file("src/binary_flag/.list_op");
+
+    if (buffer == NULL)
+        return 84;
+    printf("%s", buffer);
+    return 0;
+}
+
 int list_flag(void)
 {
     char *buffer = copy_content_file("src/binary_flag/.list_command");

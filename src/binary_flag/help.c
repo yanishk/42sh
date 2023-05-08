@@ -15,6 +15,8 @@ int flag_selection(char * const * av)
     for (int i = 0; av[i] != NULL; i++) {
         if (my_strcomp(av[i], "--list") == 0)
             list_flag();
+        if (my_strcomp(av[i], "--list-op") == 0)
+            list_op_flag();
         if (my_strcomp(av[i], "--help") == 0)
             help_flag();
     }
