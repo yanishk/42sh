@@ -11,18 +11,40 @@
 #include <string.h>
 #include "my.h"
 
+/* ORIGINAL FUNC NE PAS RM SVP!!!
+void display_line_shell(void)
+{
+    char *usr_path = "USER=";
+    char *log_name = get_env_line_path(env, log_name, usr_path);
+    my_putstr("\033[34m┌──(\033[31m");
+    my_putstr(log_name);
+    my_putstr("㉿\033[34m)-[");
+    my_putstr(current_path);
+    my_putstr("]\033[0m");
+    my_putchar('\n');
+    my_putstr("\033[34m└─$ \033[0m");
+}
+*/
+
 void control_c(int signal)
 {
-    if (signal == SIGINT)
-        my_putstr("\n$> ");
+    if (signal == SIGINT) {
+        my_putchar('\n');
+        print_prompt();
+    }
 }
 
 void print_prompt(void)
 {
     int check = isatty(STDIN_FILENO);
 
-    if (check == 1)
-        my_putstr("$> ");
+    if (check == 1) {
+        my_putstr("\033[34m┌──(\033[31m");
+        my_putstr("㉿\033[34m)-[");
+        my_putstr("]\033[0m");
+        my_putchar('\n');
+        my_putstr("\033[34m└─$ \033[0m");
+    }
 }
 
 char **set_cpy_env(char **env)
