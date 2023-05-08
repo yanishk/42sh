@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include "my.h"
 
-int flag_selection(char * const * av)
+static int flag_selection(char * const * av)
 {
     for (int i = 0; av[i] != NULL; i++) {
         if (my_strcomp(av[i], "--list") == 0)
