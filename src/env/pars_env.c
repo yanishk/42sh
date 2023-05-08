@@ -27,26 +27,24 @@ char* pars_env(char **cpy_env)
     return NULL;
 }
 
-char* remove_path(char *path)
+char* remove_path(char **cpy_env)
 {
-    int i = 0;
+    int i = 5;
     int len = 0;
-    char *new_path = NULL;
     int index = 0;
+    char *path = pars_env(cpy_env);
+    char *new_path = NULL;
 
     if (path != NULL) {
         len = my_strlen(path);
         new_path = malloc(sizeof(char) * (len + 1));
-        index = 0;
-        while (i != 5)
-            i += 1;
         while (path[i] != '\0') {
             new_path[index] = path[i];
             index += 1;
             i += 1;
         }
-            new_path[index] = '\0';
-            return new_path;
+        new_path[index] = '\0';
+        return new_path;
     }
     return NULL;
 }

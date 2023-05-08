@@ -6,6 +6,7 @@
 */
 
 #include "stockage.h"
+#include <stdbool.h>
 
 #ifndef MY_H_
     #define MY_H_
@@ -38,7 +39,7 @@
     void my_setenv(char **my_env, char **array, stock_t *sk);
     void my_unsetenv(char **my_env, char **array, stock_t *sk);
     int setenv_error_handling(char **array, int i);
-    void get_input(stock_t *sk, char *cwd, char *path, char  **cpy_env);
+    void get_input(stock_t *sk, char *path, char  **cpy_env);
     void exit_shell(stock_t *sk);
     int child_process(char** env, char *usr_bin, stock_t *sk);
     char* pars_env(char **cpy_env);
@@ -48,18 +49,16 @@
     void create_cd(char  **cpy_env, stock_t *sk);
     char* pars_old(void);
     void cd_with_arg(stock_t *sk, char *home_path, char *cwd);
-    char* remove_path(char *path);
+    char* remove_path(char **cpy_env);
     int loop_buffer(char **array);
     void check_error(int status, stock_t *sk);
     void which_error(int status, stock_t *sk);
-    void execute_command_redirect(char *cwd, char *path,
-    char  **cpy_env, stock_t *sk);
+    void execute_command_redirect(char *path, char  **cpy_env, stock_t *sk);
     int exec_source_file(char **env, stock_t *sk);
     void count_duck(stock_t *sk, int i);
     void count_pipe(stock_t *sk, int i);
-    void execute_command(char *cwd, char *path, char  **cpy_env, stock_t *sk);
-    int execute_command_pipe(char *cwd, char *path, char  **cpy_env,
-    stock_t *sk);
+    void execute_command(char *path, char  **cpy_env, stock_t *sk);
+    int execute_command_pipe(char *path, char  **cpy_env, stock_t *sk);
     int read_alias(stock_t *sk);
     void print_alias(char **tab);
     void add_alias(char **tab);
@@ -68,12 +67,13 @@
     int history_command(stock_t *sk);
     int get_last_command_number(stock_t *sk, char *buffer);
     void free_main_exec(stock_t *sk);
-    int execute_command_reverse_redirect(char *cwd, char *path,
-    char  **cpy_env, stock_t *sk);
+    int execute_command_reverse_redirect(char *path, char  **cpy_env,
+    stock_t *sk);
     void check_command(char *usr_bin, char *str, stock_t *sk);
-    void launch_pipe(char *cwd, char *path, char  **cpy_env, stock_t *sk);
-    void launch_ducks(char *cwd, char *path, char  **cpy_env, stock_t *sk);
-    void launch_command(char *cwd, char *path, char **cpy_env, stock_t *sk);
+    void launch_pipe(char *path, char  **cpy_env, stock_t *sk);
+    void check_command_type(char *path, char **cpy_env, stock_t *sk);
+    bool last_command_succeed(stock_t *sk);
+    bool last_command_failed(stock_t *sk);
     void print_env(char **args, char **env);
     char *copy_content_file(char *file);
     int help_commad(int ac, char * const *av);

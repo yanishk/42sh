@@ -8,6 +8,7 @@
 SRC	=	main.c 									\
 		src/get_input.c 						\
 		src/launch_commands.c 					\
+		src/last_command_status.c 				\
 		src/find_exec.c 						\
 		src/creating_cd.c 						\
 		src/create_path_oldpwd.c 				\

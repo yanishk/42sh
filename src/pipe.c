@@ -76,8 +76,7 @@ int execute_pipe(stock_t *sk, char *path, char  **cpy_env)
     } waitpid(pid, &status, 0); return status;
 }
 
-int execute_command_pipe(char *cwd, char *path,
-char  **cpy_env, stock_t *sk)
+int execute_command_pipe(char *path, char  **cpy_env, stock_t *sk)
 {
     int is_a_source_file = 0;
     int status = 0;
@@ -90,8 +89,7 @@ char  **cpy_env, stock_t *sk)
             sk->pipe_st.count_pipe += 1;
         sk->array_st.space = word_array(sk->array_st.pipe[i], " \t\n");
     }
-    cwd = pars_env(cpy_env);
-    path = remove_path(cwd);
+    path = remove_path(cpy_env);
     is_a_source_file = builtin_pipe(cpy_env, sk, sk->array_st.space);
     sk->pipe_st.input = 0;
     if (sk->check_st.is_a_builtin == 0 && is_a_source_file == 0) {

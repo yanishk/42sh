@@ -62,15 +62,15 @@ char **set_cpy_env(char **env)
 
 int main(int ac, char **av, char **env)
 {
-    signal(SIGINT, control_c);
-    stock_t *sk = malloc(sizeof(stock_t));
-    memset(sk, 0, sizeof(stock_t));
     char **cpy_env = set_cpy_env(env);
-    char *cwd = pars_env(cpy_env);
-    char *path = remove_path(cwd);
+    char *path = remove_path(cpy_env);
+    stock_t *sk = malloc(sizeof(stock_t));
+
     if (help_commad(ac, av) == 1 && ac > 1)
         return 0;
-    get_input(sk, cwd, path, cpy_env);
+    signal(SIGINT, control_c);
+    memset(sk, 0, sizeof(stock_t));
+    get_input(sk, path, cpy_env);
     free(sk);
     free(path);
     return (0);

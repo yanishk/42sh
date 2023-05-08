@@ -22,7 +22,8 @@ typedef struct array_s {
     char **duck;
     char **reverse_duck;
     char **pipe;
-    char **array_logical_and;
+    char **double_and;
+    char **double_pipe;
 } array_t;
 
 typedef struct check_s {
