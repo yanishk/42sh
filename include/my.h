@@ -75,5 +75,8 @@
     void launch_ducks(char *cwd, char *path, char  **cpy_env, stock_t *sk);
     void launch_command(char *cwd, char *path, char **cpy_env, stock_t *sk);
     void print_env(char **args, char **env);
+    char *copy_content_file(char *file);
+    int help_flag(void);
+    int list_flag(void);
 
 #endif /* !MY_H_ */

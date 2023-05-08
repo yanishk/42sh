@@ -13,7 +13,7 @@
 
 #include "my.h"
 
-static char *copy_content_file(char *file)
+char *copy_content_file(char *file)
 {
     struct stat sb;
     int fd = 0;

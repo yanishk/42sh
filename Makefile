@@ -31,6 +31,9 @@ SRC	=	main.c 									\
 		src/env/my_unsetenv.c 					\
 		src/env/my_setenv.c 					\
 		src/env/print_env.c						\
+		src/binary_flag/help.c					\
+		src/binary_flag/list_flag.c				\
+		src/binary_flag/help_flag.c				\
 		lib/word_array_delimiter.c 				\
 		lib/word_array_delimiter2.c 			\
 		lib/print_free_array.c 					\
