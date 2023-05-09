@@ -30,15 +30,6 @@ static char *open_rc(void)
     return buf;
 }
 
-static int len_tab(char **tab)
-{
-    int len = 0;
-    while (tab[len] != NULL) {
-        len++;
-    }
-    return len;
-}
-
 static int redirection_alias(stock_t *sk, char **cmd_tab, char **tab, int pass)
 {
     if (!strcmp(cmd_tab[0], "alias") && pass == 0 && len_tab(cmd_tab) < 2) {

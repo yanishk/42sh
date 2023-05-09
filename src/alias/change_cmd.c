@@ -10,15 +10,6 @@
 #include <stdlib.h>
 #include "my.h"
 
-static int len_tab(char **tab)
-{
-    int len = 0;
-    while (tab[len] != NULL) {
-        len++;
-    }
-    return len;
-}
-
 static int change_cmd(stock_t *sk, char **ligne, int j, int index)
 {
     char *new_cmd = '\0';
