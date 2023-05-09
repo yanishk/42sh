@@ -18,6 +18,7 @@ SRC	=	main.c 									\
 		src/count_duck.c						\
 		src/execute_binary.c 					\
 		src/exit_shell.c 						\
+		src/glob_exe.c	 						\
 		src/history/history.c					\
 		src/history/history_command.c			\
 		src/history/get_last_command_number.c 	\

@@ -54,8 +54,8 @@ static char *creat_cmd(stock_t *sk, int index)
     char *cmd = strdup(sk->array_st.alias[index]);
     if (cmd[my_strlen(cmd) - 1] == ' ' || cmd[my_strlen(cmd) - 1] == '\n')
         cmd[my_strlen(cmd) - 1] = '\0';
-    for (int i = 0; i < strlen(cmd) && cmd[i] == ' '; i++) {
-        for (int j = 0; j < strlen(cmd) - 1; j++) {
+    for (size_t i = 0; i < strlen(cmd) && cmd[i] == ' '; i++) {
+        for (size_t j = 0; j < strlen(cmd) - 1; j++) {
             cmd[j] = cmd[j + 1];
         }
         cmd[strlen(cmd) - 1] = '\0';

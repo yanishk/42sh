@@ -26,6 +26,7 @@ void main_exec(stock_t *sk, char *path, char  **cpy_env)
         read_alias(sk, 0);
         count_duck(sk, i);
         count_pipe(sk, i);
+        count_asteriks(sk, i);
         if (sk->array_st.pipe[1] != NULL && sk->check_st.is_double_pipe == 0)
             execute_command_pipe(path, cpy_env, sk);
         else

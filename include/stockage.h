@@ -34,6 +34,7 @@ typedef struct check_s {
     int is_double_pipe;
     int count_duck;
     int count_reverse_duck;
+    int count_ast;
     int number_command;
     int sig;
     int core;

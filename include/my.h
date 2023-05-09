@@ -7,6 +7,7 @@
 
 #include "stockage.h"
 #include <stdbool.h>
+#include <glob.h>
 
 #ifndef MY_H_
     #define MY_H_
@@ -81,5 +82,10 @@
     int list_flag(void);
     int list_op_flag(void);
     int len_tab(char **tab);
+
+
+    void execute_command_glob(char *path, char  **cpy_env,
+    stock_t *sk, glob_t glob_array);
+    void count_asteriks(stock_t *sk, int i);
 
 #endif /* !MY_H_ */
