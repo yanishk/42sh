@@ -80,15 +80,18 @@ int read_alias(stock_t *sk, int i)
     char *cmd = creat_cmd(sk, i);
     char **cmd_tab = word_array(cmd, "; ");
 
-    if (buf == NULL || buf[0] == '\0')
-        pass = 1;
-    else
-        tab = word_array(buf, "\n");
+    if (buf == NULL || buf[0] == '\0') {
+        int fd = open("./.42shrc", O_RDONLY);
+        fd = open("./.42shrc", O_WRONLY | O_TRUNC | O_CREAT, 422);
+        dprintf(fd, "alias ls='ls --color=auto'");
+        close(fd);
+        return 0;
+    }
+    tab = word_array(buf, "\n");
 
     if (redirection_alias(sk, cmd_tab, tab, pass) == 0)
         find_alias(sk, tab, cmd, i);
-    if (i < len_tab(sk->array_st.alias) - 1) {
+    if (i < len_tab(sk->array_st.alias) - 1)
         read_alias(sk, i + 1);
-    }
     return 0;
 }
