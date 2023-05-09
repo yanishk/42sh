@@ -18,10 +18,11 @@ void main_exec(stock_t *sk, char *path, char  **cpy_env)
     sk->check_st.is_a_command = 1;
     sk->check_st.is_command_exec = 0;
     sk->check_st.is_double_pipe = 0;
-
-    for (int i = 0; sk->array_st.virg[i]; i += 1) {
+    for (int i = 0; sk->array_st.virg[i] && sk->check_st.is_a_builtin != 84; i += 1) {
         sk->array_st.pipe = word_array(sk->array_st.virg[i], "|");
-        sk->array_st.double_and = word_array(sk->array_st.virg[i], "&");
+        sk->array_st.double_and = word_array(sk->array_st.virg[i], ";&");
+        sk->array_st.alias = sk->array_st.double_and;
+        read_alias(sk, 0);
         count_duck(sk, i);
         count_pipe(sk, i);
         if (sk->array_st.pipe[1] != NULL && sk->check_st.is_double_pipe == 0)
@@ -44,11 +45,10 @@ void get_input(stock_t *sk, char *path, char  **cpy_env)
             continue;
         }
         sk->check_st.is_a_builtin = 0;
-        read_alias(sk);
         sk->array_st.virg = word_array(sk->array_st.buffer, ";");
+        sk->array_st.alias =sk->array_st.virg;
+        read_alias(sk, 0);
         main_exec(sk, path, cpy_env);
         print_prompt();
-        free_array(sk->array_st.virg);
     }
-    free(sk->array_st.buffer);
 }
