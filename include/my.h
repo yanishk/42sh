@@ -80,5 +80,6 @@
     int help_flag(void);
     int list_flag(void);
     int list_op_flag(void);
+    int len_tab(char **tab);
 
 #endif /* !MY_H_ */

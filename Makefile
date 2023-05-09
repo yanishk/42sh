@@ -52,6 +52,7 @@ SRC	=	main.c 									\
 		lib/my_revstr.c							\
 		lib/my_int_to_str.c						\
 		lib/colorize_str.c						\
+		lib/len_tab.c							\
 
 CC ?= gcc
 
