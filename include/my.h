@@ -59,10 +59,10 @@
     void count_pipe(stock_t *sk, int i);
     void execute_command(char *path, char  **cpy_env, stock_t *sk);
     int execute_command_pipe(char *path, char  **cpy_env, stock_t *sk);
-    int read_alias(stock_t *sk);
+    int read_alias(stock_t *sk, int i);
     void print_alias(char **tab);
     void add_alias(char **tab);
-    int find_alias(stock_t *sk, char **tab, char *cmd);
+    int find_alias(stock_t *sk, char **tab, char *cmd, int index);
     int open_history_file(stock_t *sk);
     int history_command(stock_t *sk);
     int get_last_command_number(stock_t *sk, char *buffer);

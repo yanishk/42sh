@@ -24,6 +24,7 @@ typedef struct array_s {
     char **pipe;
     char **double_and;
     char **double_pipe;
+    char **alias;
 } array_t;
 
 typedef struct check_s {
