@@ -19,7 +19,7 @@ static int len_tab(char **tab)
     return len;
 }
 
-static int change_cmd(stock_t *sk, char **ligne, int j)
+static int change_cmd(stock_t *sk, char **ligne, int j, int index)
 {
     char *new_cmd = '\0';
     int len = 0;
@@ -36,31 +36,26 @@ static int change_cmd(stock_t *sk, char **ligne, int j)
         my_strcat(new_cmd, ligne[j + k]);
     }
     my_strcat(new_cmd, "\n\0");
-    strcpy(sk->array_st.buffer, new_cmd);
-    free(ligne);
-    free(new_cmd);
+    strcpy(sk->array_st.alias[index], new_cmd);
     return 0;
 }
 
-int find_alias(stock_t *sk, char **tab, char *cmd)
+int find_alias(stock_t *sk, char **tab, char *cmd, int index)
 {
     char **ligne = NULL;
+    char **ligne2 = NULL;
     for (int i = 0; i < len_tab(tab); i++) {
-        ligne = word_array(tab[i], "'= \t\n");
+        ligne = word_array(tab[i], "' =\t\n");
+        ligne2 = word_array(tab[i], "' \t\n");
         int len_ligne = len_tab(ligne);
         int j = 0;
         while (j < len_ligne && strcmp(ligne[j], cmd)) {
             j++;
         }
         if (j != len_ligne && ligne[j + 1] && j == 1) {
-            change_cmd(sk, ligne, j);
-            free_array(tab);
-            free(cmd);
-            return 0;
+            change_cmd(sk, ligne2, j, index);
+            read_alias(sk, 0);
         }
-        free_array(ligne);
     }
-    free_array(tab);
-    free(cmd);
     return 1;
 }

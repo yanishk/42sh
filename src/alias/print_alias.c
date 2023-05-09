@@ -36,10 +36,12 @@ void print_alias(char **tab)
             j++;
         }
         my_putstr("\t");
+        my_putstr("\033[34m");
         while (tab[i][j] != 39 && tab[i][j] != '\0') {
             my_putchar(tab[i][j]);
             j++;
         }
+        my_putstr("\033[0m");
         my_putstr("\n");
         j = 0;
     }
