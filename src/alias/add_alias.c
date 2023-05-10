@@ -12,15 +12,6 @@
 #include <string.h>
 #include "my.h"
 
-static int len_tab(char **tab)
-{
-    int len = 0;
-    while (tab[len] != NULL) {
-        len++;
-    }
-    return len;
-}
-
 void add_alias(char **tab)
 {
     int fd = open("./.42shrc", O_WRONLY | O_APPEND | O_CREAT, 422);

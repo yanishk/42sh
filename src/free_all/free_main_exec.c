@@ -10,8 +10,8 @@
 
 void free_main_exec(stock_t *sk)
 {
-    free_array(sk->array_pipe);
-    free_array(sk->array_duck);
-    free_array(sk->array_reverse_duck);
-    free_array(sk->array_space);
+    free_array(sk->array_st.pipe);
+    free_array(sk->array_st.duck);
+    free_array(sk->array_st.reverse_duck);
+    free_array(sk->array_st.space);
 }

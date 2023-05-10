@@ -6,9 +6,11 @@
 ##
 
 SRC	=	main.c 									\
-		src/get_input.c 						\
+		src/input/get_input.c 					\
+		src/input/input_manager.c 				\
+		src/launch_commands.c 					\
+		src/last_command_status.c 				\
 		src/find_exec.c 						\
-		src/pars_env.c 							\
 		src/creating_cd.c 						\
 		src/create_path_oldpwd.c 				\
 		src/loop_buffer.c 						\
@@ -17,18 +19,30 @@ SRC	=	main.c 									\
 		src/count_duck.c						\
 		src/execute_binary.c 					\
 		src/exit_shell.c 						\
+		src/glob_exe.c	 						\
+		src/pipe.c 								\
+		src/exec_pipe.c 						\
 		src/history/history.c					\
 		src/history/history_command.c			\
 		src/history/get_last_command_number.c 	\
-		src/pipe.c 								\
-		src/my_setenv.c 						\
-		src/my_unsetenv.c 						\
-		src/setenv_error_handling.c 			\
 		src/alias/read_alias.c					\
 		src/alias/print_alias.c					\
 		src/alias/add_alias.c					\
 		src/alias/change_cmd.c					\
 		src/free_all/free_main_exec.c			\
+		src/env/setenv_error_handling.c 		\
+		src/env/pars_env.c 						\
+		src/env/my_unsetenv.c 					\
+		src/env/my_setenv.c 					\
+		src/env/print_env.c						\
+		src/binary_flag/help.c					\
+		src/binary_flag/list_flag.c				\
+		src/binary_flag/help_flag.c				\
+		src/echo/echo.c 						\
+		src/echo/check_variables.c 				\
+		src/echo/print_variable_value.c 		\
+		src/arrow/handle_arrow.c				\
+		src/arrow/arrow_up_down.c				\
 		lib/word_array_delimiter.c 				\
 		lib/word_array_delimiter2.c 			\
 		lib/print_free_array.c 					\
@@ -46,6 +60,7 @@ SRC	=	main.c 									\
 		lib/my_revstr.c							\
 		lib/my_int_to_str.c						\
 		lib/colorize_str.c						\
+		lib/len_tab.c							\
 
 CC ?= gcc
 

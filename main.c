@@ -8,21 +8,49 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
-
+#include <termios.h>
+#include <ctype.h>
+#include <string.h>
 #include "my.h"
+
+/* ORIGINAL FUNC NE PAS RM SVP!!!
+void display_line_shell(void)
+{
+    char *usr_path = "USER=";
+    char *log_name = get_env_line_path(env, log_name, usr_path);
+    my_putstr("\033[34m┌──(\033[31m");
+    my_putstr(log_name);
+    my_putstr("㉿\033[34m)-[");
+    my_putstr(current_path);
+    my_putstr("]\033[0m");
+    my_putchar('\n');
+    my_putstr("\033[34m└─$ \033[0m");
+}
+*/
 
 void control_c(int signal)
 {
-    if (signal == SIGINT)
-        my_putstr("\n$> ");
+    if (signal == SIGINT) {
+        my_putchar('\n');
+        print_prompt();
+    }
+    if (signal == SIGQUIT) {
+        my_putchar('\n');
+        print_prompt();
+    }
 }
 
 void print_prompt(void)
 {
     int check = isatty(STDIN_FILENO);
 
-    if (check == 1)
-        my_putstr("$> ");
+    if (check == 1) {
+        my_putstr("\033[34m┌──(\033[31m");
+        my_putstr("㉿\033[34m)-[");
+        my_putstr("]\033[0m");
+        my_putchar('\n');
+        my_putstr("\033[34m└─$ \033[0m");
+    }
 }
 
 char **set_cpy_env(char **env)
@@ -40,16 +68,23 @@ char **set_cpy_env(char **env)
 
 int main(int ac, char **av, char **env)
 {
-    if (ac != 1)
-        return (84);
-
-    signal(SIGINT, control_c);
-    stock_t *sk = malloc(sizeof(stock_t));
     char **cpy_env = set_cpy_env(env);
-    char *cwd = pars_env(cpy_env);
-    char *path = remove_path(cwd);
+    char *path = remove_path(cpy_env);
+    stock_t *sk = malloc(sizeof(stock_t));
+    struct termios orig_termios, new_termios;
+    tcgetattr(STDIN_FILENO, &orig_termios);
+    new_termios = orig_termios;
+    new_termios.c_lflag &= ~(ICANON | ECHO);
+    new_termios.c_cc[VMIN] = 1;
+    new_termios.c_cc[VTIME] = 0;
+    tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
+    sk->check_st.end = 0;
+    if (help_commad(ac, av) == 1 && ac > 1)
+        return 0;
+    signal(SIGINT, control_c);
+    signal(SIGQUIT, control_c);
+    memset(sk, 0, sizeof(stock_t));
     get_input(sk, path, cpy_env);
-    free(sk);
-    free(path);
-    return (0);
+    tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
+    return (sk->check_st.end - 1);
 }

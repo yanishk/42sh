@@ -18,7 +18,7 @@ static int write_command(stock_t *sk, int fd)
 {
     char *cmd_str = NULL;
 
-    cmd_str = strdup(sk->buffer);
+    cmd_str = strdup(sk->array_st.buffer);
     if (cmd_str == NULL)
         return 84;
     if (write(fd, cmd_str, strlen(cmd_str)) == -1) {
@@ -32,8 +32,8 @@ static int write_number_of_command(stock_t *sk, int fd)
 {
     char *str_nb_command = NULL;
 
-    sk->number_command += 1;
-    str_nb_command = my_int_to_str(sk->number_command);
+    sk->check_st.number_command += 1;
+    str_nb_command = my_int_to_str(sk->check_st.number_command);
     if (str_nb_command == NULL)
         return 84;
     if (write(fd, str_nb_command, strlen(str_nb_command)) == -1)

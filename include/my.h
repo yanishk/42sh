@@ -6,6 +6,8 @@
 */
 
 #include "stockage.h"
+#include <stdbool.h>
+#include <glob.h>
 
 #ifndef MY_H_
     #define MY_H_
@@ -26,9 +28,8 @@
     int is_delimiter(char c, char *delim);
     int cut_str(char const *str, char *delim);
     int check_character(char const *str, char *delim, int cut_here);
-    char **word_array_delim(char const *str, char *delimiters);
-    char **my_str_to_word_array_alias(char const *str);
-    char **my_str_to_word_array_delim(char const *str, char delim);
+    char **word_array(char const *str, char *delimiters);
+    int len_tab(char **tab);
     void print_array(char **array);
     void free_array(char **array);
     char *my_revstr(char *str);
@@ -44,24 +45,23 @@
     void exit_shell(stock_t *sk);
     int child_process(char** env, char *usr_bin, stock_t *sk);
     char* pars_env(char **cpy_env);
-    char* find_dots(char *path, stock_t *sk);
+    char* find_dots(char *path, stock_t *sk, int check);
     char* pars_home(char  **cpy_env);
     char* find_equal_cd(char *home);
     void create_cd(char  **cpy_env, stock_t *sk);
     char* pars_old(void);
     void cd_with_arg(stock_t *sk, char *home_path, char *cwd);
-    char* remove_path(char *path);
+    char* remove_path(char **cpy_env);
     int loop_buffer(char **array);
     void check_error(int status, stock_t *sk);
     void which_error(int status, stock_t *sk);
-    int check_first_array(stock_t *sk, int check);
-    void execute_command_redirect(char *path,
-    char  **cpy_env, stock_t *sk);
+    void execute_command_redirect(char *path, char  **cpy_env, stock_t *sk);
     int exec_source_file(char **env, stock_t *sk);
-    void count_duck(stock_t *sk);
+    void count_duck(stock_t *sk, int i);
+    void count_pipe(stock_t *sk, int i);
     void execute_command(char *path, char  **cpy_env, stock_t *sk);
     int execute_command_pipe(char *path, char  **cpy_env, stock_t *sk);
-    int read_alias(stock_t *sk, int i);
+    char **read_alias(stock_t *sk, int i);
     void print_alias(char **tab);
     void add_alias(char **tab);
     int find_alias(stock_t *sk, char **tab, char *cmd, int index);
@@ -69,7 +69,34 @@
     int history_command(stock_t *sk);
     int get_last_command_number(stock_t *sk, char *buffer);
     void free_main_exec(stock_t *sk);
-    int execute_command_reverse_redirect(char *path,
-    char  **cpy_env, stock_t *sk);
+    int execute_command_reverse_redirect(char *path, char  **cpy_env,
+    stock_t *sk);
     void check_command(char *usr_bin, char *str, stock_t *sk);
+    void launch_pipe(char *path, char  **cpy_env, stock_t *sk);
+    void check_command_type(char *path, char **cpy_env, stock_t *sk);
+    bool last_command_succeed(stock_t *sk);
+    bool last_command_failed(stock_t *sk);
+    void print_env(char **args, char **env);
+    char *copy_content_file(char *file);
+    int help_commad(int ac, char * const *av);
+    int help_flag(void);
+    int list_flag(void);
+    int list_op_flag(void);
+    void my_echo(stock_t *sk, char **cpy_env);
+    int search_env_variables(stock_t *sk, char **cpy_env);
+    void print_variable_value(char *variable_name, char **cpy_env);
+
+    void execute_command_glob(char *path, char  **cpy_env,
+    stock_t *sk, glob_t glob_array);
+    void count_asteriks(stock_t *sk, int i);
+
+    char* exec_parent_pro_pipe(stock_t *sk, char *path, int *fds);
+    void error_exec(int exec, stock_t *sk, char *usr_bin);
+    void close_fds(int fd_1, stock_t *sk);
+    int builtin_pipe(char **cpy_env, stock_t *sk, char **end);
+    int input_manager(stock_t *sk);
+    void arrow_check(char c, stock_t *sk);
+    void arrow_up(stock_t *sk);
+    void arrow_down(stock_t *sk);
+
 #endif /* !MY_H_ */

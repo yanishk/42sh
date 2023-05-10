@@ -10,15 +10,6 @@
 #include <stdlib.h>
 #include "my.h"
 
-static int len_tab(char **tab)
-{
-    int len = 0;
-    while (tab[len] != NULL) {
-        len++;
-    }
-    return len;
-}
-
 static int change_cmd(stock_t *sk, char **ligne, int j, int index)
 {
     char *new_cmd = '\0';
@@ -35,10 +26,7 @@ static int change_cmd(stock_t *sk, char **ligne, int j, int index)
             my_strcat(new_cmd, " ");
         my_strcat(new_cmd, ligne[j + k]);
     }
-    my_strcat(new_cmd, "\n\0");
-    strcpy(sk->array_virg[index], new_cmd);
-    free(ligne);
-    free(new_cmd);
+    sk->array_st.alias[index] = my_strdup(new_cmd);
     return 0;
 }
 
@@ -47,20 +35,17 @@ int find_alias(stock_t *sk, char **tab, char *cmd, int index)
     char **ligne = NULL;
     char **ligne2 = NULL;
     for (int i = 0; i < len_tab(tab); i++) {
-        ligne = word_array_delim(tab[i], "' =\t\n");
-        ligne2 = word_array_delim(tab[i], "' \t\n");
+        ligne = word_array(tab[i], "' =\t\n");
+        ligne2 = word_array(tab[i], "' \t\n");
         int len_ligne = len_tab(ligne);
         int j = 0;
         while (j < len_ligne && strcmp(ligne[j], cmd)) {
             j++;
         }
-        if (j != len_ligne && ligne[j + 1] && j == 1) {
+        if (j != len_ligne && ligne[j + 1] != NULL && j == 1) {
             change_cmd(sk, ligne2, j, index);
             read_alias(sk, 0);
         }
-        free_array(ligne);
     }
-    free_array(tab);
-    free(cmd);
     return 1;
 }
