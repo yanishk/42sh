@@ -87,7 +87,7 @@ stock_t *sk, glob_t glob_array)
             exec_source_file_glob(cpy_env, sk);
     }
     if (is_a_source_file == 0) {
-        usr_bin = find_dots(path, sk);
+        usr_bin = find_dots(path, sk, 0);
         check_builtins_glob(cpy_env, sk);
         check_command(usr_bin, sk->array_st.space[0], sk);
         if (sk->check_st.is_a_builtin == 0 && sk->check_st.is_a_command == 1)

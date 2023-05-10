@@ -45,7 +45,7 @@
     void exit_shell(stock_t *sk);
     int child_process(char** env, char *usr_bin, stock_t *sk);
     char* pars_env(char **cpy_env);
-    char* find_dots(char *path, stock_t *sk);
+    char* find_dots(char *path, stock_t *sk, int check);
     char* pars_home(char  **cpy_env);
     char* find_equal_cd(char *home);
     void create_cd(char  **cpy_env, stock_t *sk);
@@ -89,5 +89,10 @@
     void execute_command_glob(char *path, char  **cpy_env,
     stock_t *sk, glob_t glob_array);
     void count_asteriks(stock_t *sk, int i);
+
+    char* exec_parent_pro_pipe(stock_t *sk, char *path, int *fds);
+    void error_exec(int exec, stock_t *sk, char *usr_bin);
+    void close_fds(int fd_1, stock_t *sk);
+    int builtin_pipe(char **cpy_env, stock_t *sk, char **end);
 
 #endif /* !MY_H_ */

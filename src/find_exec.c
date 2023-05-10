@@ -14,14 +14,15 @@
 
 #include "my.h"
 
-static char* concat_malloc_path(stock_t *sk, char **array_path, int x)
+static char* concat_malloc_path(stock_t *sk, char **array_path,
+int x, int check)
 {
     int len_array = 0;
     int len_arg = 0;
     char *path_concat = NULL;
 
     len_array = my_strlen(array_path[x]);
-    if (sk->array_st.space[0] == NULL) {
+    if (sk->array_st.space[0] == NULL && check == 1) {
         my_putstr_error("Invalid null command.\n");
         return NULL;
     }
@@ -33,7 +34,7 @@ static char* concat_malloc_path(stock_t *sk, char **array_path, int x)
     return path_concat;
 }
 
-char* find_dots(char *path, stock_t *sk)
+char* find_dots(char *path, stock_t *sk, int check)
 {
     char **array_path = NULL;
     int x = 0;
@@ -43,7 +44,7 @@ char* find_dots(char *path, stock_t *sk)
         return NULL;
     array_path = word_array(path, ":");
     while (array_path[x] != NULL) {
-        path_concat = concat_malloc_path(sk, array_path, x);
+        path_concat = concat_malloc_path(sk, array_path, x, check);
         if (access(path_concat, X_OK) == 0) {
             free_array(array_path);
             return path_concat;
