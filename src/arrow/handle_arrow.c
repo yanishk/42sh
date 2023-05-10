@@ -22,8 +22,8 @@ void arrow_check(char c, stock_t *sk)
             switch (c) {
                 case 'A': arrow_up(sk); break;
                 case 'B': arrow_down(sk); break;
-                case 'C': printf("flèche droite\n"); break;
-                case 'D': printf("flèche gauche\n"); break;
+                case 'C': ; break;
+                case 'D': ; break;
                 default: printf("autre touche spéciale\n"); break;
             }
         }

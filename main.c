@@ -8,9 +8,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
-#include <termios.h>
-#include <ctype.h>
 #include <string.h>
+#include <stdio.h>
 #include "my.h"
 
 /* ORIGINAL FUNC NE PAS RM SVP!!!
@@ -71,20 +70,15 @@ int main(int ac, char **av, char **env)
     char **cpy_env = set_cpy_env(env);
     char *path = remove_path(cpy_env);
     stock_t *sk = malloc(sizeof(stock_t));
-    struct termios orig_termios, new_termios;
-    tcgetattr(STDIN_FILENO, &orig_termios);
-    new_termios = orig_termios;
-    new_termios.c_lflag &= ~(ICANON | ECHO);
-    new_termios.c_cc[VMIN] = 1;
-    new_termios.c_cc[VTIME] = 0;
-    tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
     sk->check_st.end = 0;
+    sk->input.is_term = isatty(0);
+    setbuf(stdout, NULL);
+    setbuf(stderr, NULL);
     if (help_commad(ac, av) == 1 && ac > 1)
         return 0;
     signal(SIGINT, control_c);
     signal(SIGQUIT, control_c);
     memset(sk, 0, sizeof(stock_t));
     get_input(sk, path, cpy_env);
-    tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
     return (sk->check_st.end - 1);
 }

@@ -12,6 +12,8 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <string.h>
+#include <termios.h>
+#include <ctype.h>
 #include "my.h"
 
 static char **alias_manager(stock_t *sk, char **tab)
@@ -56,6 +58,39 @@ void main_exec(stock_t *sk, char *path, char  **cpy_env)
     }
 }
 
+static int input_no_term(stock_t *sk)
+{
+    size_t bufsize = 0;
+    sk->array_st.buffer = NULL;
+
+    getline(&sk->array_st.buffer, &bufsize, stdin);
+    if (my_strlen(sk->array_st.buffer) == 1) {
+        print_prompt();
+        return 1;
+    }
+    if (my_strlen(sk->array_st.buffer) < 1) {
+        sk->check_st.end = 1;
+        return 1;
+    }
+    return 0;
+}
+
+static int input_type(stock_t *sk)
+{
+    int status = 0;
+    struct termios orig_termios, new_termios;
+    if (isatty(0) == 0)
+        return input_no_term(sk);
+
+    tcgetattr(STDIN_FILENO, &orig_termios);
+    new_termios = orig_termios;
+    new_termios.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
+    status = input_manager(sk);
+    tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
+    return status;
+}
+
 void get_input(stock_t *sk, char *path, char  **cpy_env)
 {
     int valid = 0;
@@ -64,7 +99,7 @@ void get_input(stock_t *sk, char *path, char  **cpy_env)
     sk->input.nb_key_up = 0;
     print_prompt();
     while (sk->check_st.end == 0) {
-        valid = input_manager(sk);
+        valid = input_type(sk);
         if (valid != 0)
             continue;
         sk->check_st.is_a_builtin = 0;

@@ -8,6 +8,8 @@
 #ifndef STOCK_H_
     #define STOCK_H_
 
+    #include <stdbool.h>
+
 typedef struct pipe_s {
     int count_pipe;
     int index_pipe;
@@ -46,6 +48,7 @@ typedef struct input_s {
     int cmd_len;
     int nb_key_up;
     char *cmd;
+    bool is_term;
 } input_t;
 
 typedef struct stock_s {
