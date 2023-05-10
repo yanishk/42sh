@@ -24,7 +24,7 @@ static char *open_history(void)
     char *buf = malloc(sizeof(char) * sb.st_size);
 
     read(fd, buf, sb.st_size);
-    buf[sb.st_size] = '\0';
+    buf[sb.st_size - 1] = '\0';
     close(fd);
     return buf;
 }
@@ -36,17 +36,17 @@ static void arrow_cmd(stock_t *sk, char *history_ligne)
         if (history_ligne[i] == ' ')
             pass++;
     }
-    char *new_cmd = malloc(sizeof(char) * strlen(history_ligne));
-    for (int j = 0; history_ligne[i] != '\0'; j++, i++) {
+    char *new_cmd = malloc(sizeof(char) * (strlen(history_ligne) - i + 1));
+    for (int j = 0; history_ligne[i - 1] != '\0'; j++, i++) {
         new_cmd[j] = history_ligne[i];
     }
     for (int j = 0; j < sk->input.cmd_len; j++) {
         write(1, "\b \b", 3);
     }
-    sk->input.cmd = strdup(new_cmd);
-    sk->input.cmd_len = strlen(new_cmd) + 1;
+    sk->input.cmd = my_strdup(new_cmd);
+    sk->input.cmd_len = my_strlen(sk->input.cmd) + 1;
     write(1, " ", 1);
-    write(1, new_cmd, strlen(new_cmd));
+    write(1, sk->input.cmd, my_strlen(sk->input.cmd));
 }
 
 void arrow_up(stock_t *sk)

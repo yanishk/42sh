@@ -21,7 +21,6 @@ int is_a_number(stock_t *sk, int x)
 
 static void exit_simple(stock_t *sk)
 {
-    free_array(sk->array_st.space);
     sk->check_st.end = 1;
     sk->check_st.is_a_builtin = 1;
 }
