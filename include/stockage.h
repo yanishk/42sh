@@ -28,6 +28,7 @@ typedef struct array_s {
 } array_t;
 
 typedef struct check_s {
+    int last_return_value;
     int is_a_builtin;
     int is_a_command;
     int is_command_exec;

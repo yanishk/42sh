@@ -18,11 +18,12 @@ int child_process(char** cpy_env, char *usr_bin, stock_t *sk)
 {
     pid_t pid = fork();
     int status = 0;
+    int exec = 0;
 
     if (pid == -1)
         exit(84);
     if (pid == 0) {
-        int exec = execve(usr_bin, sk->array_st.space, cpy_env);
+        exec = execve(usr_bin, sk->array_st.space, cpy_env);
         if (exec == -1) {
             my_putstr_error(sk->array_st.space[0]);
             my_putstr_error(": Exec format error. Wrong Architecture.\n");
@@ -32,7 +33,7 @@ int child_process(char** cpy_env, char *usr_bin, stock_t *sk)
         wait(&status);
     }
     which_error(status, sk);
-    if (status != 0)
+    if (status != 0 || exec == -1)
         sk->check_st.is_command_exec = 1;
     return status;
 }
@@ -41,11 +42,12 @@ int exec_source_file(char **cpy_env, stock_t *sk)
 {
     pid_t pid = fork();
     int status = 0;
+    int exec = 0;
 
     if (pid == -1)
         exit (84);
     if (pid == 0) {
-        int exec = execve(sk->array_st.space[0], sk->array_st.space, cpy_env);
+        exec = execve(sk->array_st.space[0], sk->array_st.space, cpy_env);
         if (exec == -1) {
             my_putstr_error(sk->array_st.space[0]);
             my_putstr_error(": Exec format error. Wrong Architecture.\n");
@@ -55,13 +57,14 @@ int exec_source_file(char **cpy_env, stock_t *sk)
         wait(&status);
     }
     which_error(status, sk);
-    if (status != 0)
+    if (status != 0 || exec == -1)
         sk->check_st.is_command_exec = 1;
     return status;
 }
 
 void check_builtins(char **cpy_env, stock_t *sk)
 {
+    my_echo(sk, cpy_env);
     create_cd(cpy_env, sk);
     open_history_file(sk);
     history_command(sk);
@@ -69,6 +72,19 @@ void check_builtins(char **cpy_env, stock_t *sk)
     my_setenv(cpy_env, sk->array_st.space, sk);
     my_unsetenv(cpy_env, sk->array_st.space, sk);
     exit_shell(sk);
+}
+
+void actualize_return_value(stock_t *sk)
+{
+    if (last_command_succeed(sk)) {
+        sk->check_st.last_return_value = 0;
+    } else {
+        sk->check_st.last_return_value = 1;
+    }
+    if (sk->check_st.sig == SIGSEGV)
+    sk->check_st.last_return_value = 139;
+    if (sk->check_st.sig == SIGFPE)
+        sk->check_st.last_return_value = 136;
 }
 
 void execute_command(char *path, char  **cpy_env, stock_t *sk)
@@ -91,4 +107,5 @@ void execute_command(char *path, char  **cpy_env, stock_t *sk)
             child_process(cpy_env, usr_bin, sk);
         free(usr_bin);
     }
+    actualize_return_value(sk);
 }

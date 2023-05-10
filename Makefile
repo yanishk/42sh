@@ -36,6 +36,9 @@ SRC	=	main.c 									\
 		src/binary_flag/help.c					\
 		src/binary_flag/list_flag.c				\
 		src/binary_flag/help_flag.c				\
+		src/echo/echo.c 						\
+		src/echo/check_variables.c 				\
+		src/echo/print_variable_value.c 		\
 		lib/word_array_delimiter.c 				\
 		lib/word_array_delimiter2.c 			\
 		lib/print_free_array.c 					\

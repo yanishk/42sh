@@ -29,6 +29,7 @@
     int cut_str(char const *str, char *delim);
     int check_character(char const *str, char *delim, int cut_here);
     char **word_array(char const *str, char *delimiters);
+    int len_tab(char **tab);
     void print_array(char **array);
     void free_array(char **array);
     char *my_revstr(char *str);
@@ -81,8 +82,9 @@
     int help_flag(void);
     int list_flag(void);
     int list_op_flag(void);
-    int len_tab(char **tab);
-
+    void my_echo(stock_t *sk, char **cpy_env);
+    int search_env_variables(stock_t *sk, char **cpy_env);
+    void print_variable_value(char *variable_name, char **cpy_env);
 
     void execute_command_glob(char *path, char  **cpy_env,
     stock_t *sk, glob_t glob_array);
