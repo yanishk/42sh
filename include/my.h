@@ -88,12 +88,17 @@
     int search_env_variables(stock_t *sk, char **cpy_env);
     void print_variable_value(char *variable_name, char **cpy_env);
     void actualize_return_value(stock_t *sk);
-
+    int execute_command_reverse_redirect_pipe(char *usr_bin, char  **cpy_env,
+    stock_t *sk);
+    void execute_command_redirect_pipe(char *usr_bin, char  **cpy_env,
+    stock_t *sk);
     void execute_command_glob(char *path, char  **cpy_env,
     stock_t *sk, glob_t glob_array);
     void count_asteriks(stock_t *sk, int i);
+    int create_file_double(stock_t *sk);
 
-    char* exec_parent_pro_pipe(stock_t *sk, char *path, int *fds);
+    void exec_parent_pro_pipe(stock_t *sk, char *path, int *fds,
+    char **cpy_env);
     void error_exec(int exec, stock_t *sk, char *usr_bin);
     void close_fds(int fd_1, stock_t *sk);
     int builtin_pipe(char **cpy_env, stock_t *sk, char **end);

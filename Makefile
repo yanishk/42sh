@@ -20,8 +20,9 @@ SRC	=	main.c 									\
 		src/execute_binary.c 					\
 		src/exit_shell.c 						\
 		src/glob_exe.c	 						\
-		src/pipe.c 								\
-		src/exec_pipe.c 						\
+		src/pipe/pipe.c 						\
+		src/pipe/exec_pipe.c 					\
+		src/pipe/redirection_pipe.c 			\
 		src/display_prompt.c					\
 		src/history/history.c					\
 		src/history/history_command.c			\

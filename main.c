@@ -15,9 +15,8 @@
 
 void control_c(int signal)
 {
-    if (signal == SIGINT) {
-        my_putchar('\n');
-    }
+    if (signal == SIGINT)
+        return;
 }
 
 char **set_cpy_env(char **env)
