@@ -12,6 +12,7 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <string.h>
+#include <dirent.h>
 #include "my.h"
 
 static int set_cmd(stock_t *sk, char c)
@@ -45,7 +46,35 @@ static void remove_input(stock_t *sk, char c)
     }
 }
 
-int input_manager(stock_t *sk)
+static void handle_tab(stock_t *sk, char **env_cpy)
+{
+    DIR *tab;
+    struct dirent *directory_tab;
+    char *current_path = getcwd(NULL, 0);
+
+    tab = opendir(".");
+    if (tab == NULL)
+        return;
+    printf("\n");
+    while ((directory_tab = readdir(tab)) != NULL) {
+        if (directory_tab->d_name[0] != '.')
+            printf("%s\t", directory_tab->d_name);
+    }
+    printf("\n");
+    print_prompt(sk, current_path, env_cpy);
+    closedir(tab);
+    return;
+}
+
+static void tab_or_no(stock_t *sk, char c, char **env_cpy)
+{
+    if (c == '\t') {
+        c = '\0';
+        handle_tab(sk, env_cpy);
+    }
+}
+
+int input_manager(stock_t *sk, char **env_cpy)
 {
     char c = '\0';
     int status = 0;
@@ -53,17 +82,18 @@ int input_manager(stock_t *sk)
     sk->input.cmd[0] = '\0';
     sk->array_st.buffer = NULL;
     sk->input.cmd_len = 1;
+
     while (c != '\n') {
         read(STDIN_FILENO, &c, 1);
         if (c == 4) {
             sk->check_st.end = 1;
             return 1;
         }
+        tab_or_no(sk, c, env_cpy);
         arrow_check(c, sk);
         remove_input(sk, c);
-        if (c != '\033' && c != '[' && c != '\b' && c != 127) {
+        if (c != '\033' && c != '[' && c != '\b' && c != 127 && c != '\t')
             status = set_cmd(sk, c);
-        }
     }
     return status;
 }

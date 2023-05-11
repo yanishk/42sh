@@ -34,12 +34,9 @@ void lauch_glob_ast(char *path, char **cpy_env, stock_t *sk, int i)
 {
     glob_t glob_array;
 
-    sk->array_st.space_snd = word_array(sk->array_st.virg[i], " ");
+    sk->array_st.space_snd = word_array(sk->array_st.virg[i], " \n");
     for (int x = 1; sk->array_st.space_snd[x]; x += 1) {
         glob_array.gl_offs = 1;
-        if (sk->array_st.space_snd[x + 1] == NULL)
-            sk->array_st.space_snd[x][my_strlen(sk->array_st.space_snd[x]) - 1]
-            = '\0';
         if (x == 1)
             glob(sk->array_st.space_snd[x], GLOB_DOOFFS
             | GLOB_ERR, NULL, &glob_array);

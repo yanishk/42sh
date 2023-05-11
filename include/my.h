@@ -96,7 +96,7 @@
     void error_exec(int exec, stock_t *sk, char *usr_bin);
     void close_fds(int fd_1, stock_t *sk);
     int builtin_pipe(char **cpy_env, stock_t *sk, char **end);
-    int input_manager(stock_t *sk);
+    int input_manager(stock_t *sk, char **env_cpy);
     void arrow_check(char c, stock_t *sk);
     void arrow_up(stock_t *sk);
     void arrow_down(stock_t *sk);

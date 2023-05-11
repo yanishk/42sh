@@ -87,7 +87,7 @@ static int input_type(stock_t *sk, char **cpy_env)
     new_termios = orig_termios;
     new_termios.c_lflag &= ~(ICANON | ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
-    status = input_manager(sk);
+    status = input_manager(sk, cpy_env);
     tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
     return status;
 }
