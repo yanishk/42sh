@@ -45,7 +45,6 @@ int create_file_double(stock_t *sk)
     }
     while (getline(&str, &len, stdin) != -1) {
         len = strlen(str);
-        str[len - 1] = '\0';
         if (strcmp(str, sk->array_st.space_snd[0]) == 0)
             break;
         write(fd, str, len);
