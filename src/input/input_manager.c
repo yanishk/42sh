@@ -21,12 +21,12 @@ static int set_cmd(stock_t *sk, char c)
     sk->input.cmd[sk->input.cmd_len - 1] = c;
     sk->input.cmd[sk->input.cmd_len] = '\0';
     sk->input.cmd_len++;
+
     write(1, &c, 1);
     if (c == '\n') {
         sk->input.nb_key_up = 0;
         sk->array_st.buffer = strdup(sk->input.cmd);
         if (strlen(sk->array_st.buffer) <= 1) {
-            print_prompt();
             return 84;
         }
         free(sk->input.cmd);

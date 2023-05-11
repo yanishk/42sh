@@ -36,8 +36,10 @@
     char *my_int_to_str(int nb);
     char *colorize_str(const char *str, const char *color);
 
-    void print_prompt(void);
+    int print_prompt(stock_t *sk, char *current_path, char **env_cpy);
+    char *remove_variable_name(char *path);
     char **init_old_env(char **my_env);
+    int error_handling_help(int ac, char **av);
     void my_setenv(char **my_env, char **array, stock_t *sk);
     void my_unsetenv(char **my_env, char **array, stock_t *sk);
     int setenv_error_handling(char **array, int i);
@@ -78,7 +80,7 @@
     bool last_command_failed(stock_t *sk);
     void print_env(char **args, char **env);
     char *copy_content_file(char *file);
-    int help_commad(int ac, char * const *av);
+    int help_commad(char * const *av);
     int help_flag(void);
     int list_flag(void);
     int list_op_flag(void);

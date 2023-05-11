@@ -22,6 +22,7 @@ SRC	=	main.c 									\
 		src/glob_exe.c	 						\
 		src/pipe.c 								\
 		src/exec_pipe.c 						\
+		src/display_prompt.c					\
 		src/history/history.c					\
 		src/history/history_command.c			\
 		src/history/get_last_command_number.c 	\

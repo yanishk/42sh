@@ -11,7 +11,7 @@
 #include <string.h>
 #include "my.h"
 
-static char *remove_variable_name(char *path)
+char *remove_variable_name(char *path)
 {
     int i = 0;
     int len = 0;

@@ -59,14 +59,14 @@ void main_exec(stock_t *sk, char *path, char  **cpy_env)
     }
 }
 
-static int input_no_term(stock_t *sk)
+static int input_no_term(stock_t *sk, char **cpy_env)
 {
     size_t bufsize = 0;
     sk->array_st.buffer = NULL;
 
     getline(&sk->array_st.buffer, &bufsize, stdin);
     if (my_strlen(sk->array_st.buffer) == 1) {
-        print_prompt();
+        print_prompt(sk, getcwd(NULL, 0), cpy_env);
         return 1;
     }
     if (my_strlen(sk->array_st.buffer) < 1) {
@@ -76,12 +76,12 @@ static int input_no_term(stock_t *sk)
     return 0;
 }
 
-static int input_type(stock_t *sk)
+static int input_type(stock_t *sk, char **cpy_env)
 {
     int status = 0;
     struct termios orig_termios, new_termios;
     if (isatty(0) == 0)
-        return input_no_term(sk);
+        return input_no_term(sk, cpy_env);
 
     tcgetattr(STDIN_FILENO, &orig_termios);
     new_termios = orig_termios;
@@ -98,9 +98,10 @@ void get_input(stock_t *sk, char *path, char  **cpy_env)
     sk->array_st.buffer = NULL;
     sk->check_st.number_command = 0;
     sk->input.nb_key_up = 0;
-    print_prompt();
+
+    print_prompt(sk, getcwd(NULL, 0), cpy_env);
     while (sk->check_st.end == 0) {
-        valid = input_type(sk);
+        valid = input_type(sk, cpy_env);
         if (valid != 0)
             continue;
         sk->check_st.is_a_builtin = 0;
@@ -108,6 +109,6 @@ void get_input(stock_t *sk, char *path, char  **cpy_env)
         sk->array_st.virg = alias_manager(sk, sk->array_st.virg);
         main_exec(sk, path, cpy_env);
         if (sk->check_st.end == 0)
-            print_prompt();
+            print_prompt(sk, getcwd(NULL, 0), cpy_env);
     }
 }
