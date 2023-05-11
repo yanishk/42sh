@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
+#include <stdio.h>
 #include "my.h"
 
 /* ORIGINAL FUNC NE PAS RM SVP!!!
@@ -65,13 +66,14 @@ int main(int ac, char **av, char **env)
     char **cpy_env = set_cpy_env(env);
     char *path = remove_path(cpy_env);
     stock_t *sk = malloc(sizeof(stock_t));
+    sk->check_st.end = 0;
 
+    setbuf(stdout, NULL);
+    setbuf(stderr, NULL);
     if (help_commad(ac, av) == 1 && ac > 1)
         return 0;
     signal(SIGINT, control_c);
     memset(sk, 0, sizeof(stock_t));
     get_input(sk, path, cpy_env);
-    free(sk);
-    free(path);
-    return (0);
+    return (sk->check_st.end - 1);
 }

@@ -6,7 +6,8 @@
 ##
 
 SRC	=	main.c 									\
-		src/get_input.c 						\
+		src/input/get_input.c 					\
+		src/input/input_manager.c 				\
 		src/launch_commands.c 					\
 		src/last_command_status.c 				\
 		src/find_exec.c 						\
@@ -40,6 +41,8 @@ SRC	=	main.c 									\
 		src/echo/echo.c 						\
 		src/echo/check_variables.c 				\
 		src/echo/print_variable_value.c 		\
+		src/arrow/handle_arrow.c				\
+		src/arrow/arrow_up_down.c				\
 		lib/word_array_delimiter.c 				\
 		lib/word_array_delimiter2.c 			\
 		lib/print_free_array.c 					\
@@ -67,7 +70,7 @@ RM = rm -f
 
 CPPFLAGS += -iquote./include
 
-CFLAGS += -Wall -Wextra -g
+CFLAGS += -Wall -Wextra -g3
 
 NAME	=	42sh
 

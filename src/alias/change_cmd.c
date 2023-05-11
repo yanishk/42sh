@@ -26,8 +26,7 @@ static int change_cmd(stock_t *sk, char **ligne, int j, int index)
             my_strcat(new_cmd, " ");
         my_strcat(new_cmd, ligne[j + k]);
     }
-    my_strcat(new_cmd, "\n\0");
-    strcpy(sk->array_st.alias[index], new_cmd);
+    sk->array_st.alias[index] = my_strdup(new_cmd);
     return 0;
 }
 
@@ -43,7 +42,7 @@ int find_alias(stock_t *sk, char **tab, char *cmd, int index)
         while (j < len_ligne && strcmp(ligne[j], cmd)) {
             j++;
         }
-        if (j != len_ligne && ligne[j + 1] && j == 1) {
+        if (j != len_ligne && ligne[j + 1] != NULL && j == 1) {
             change_cmd(sk, ligne2, j, index);
             read_alias(sk, 0);
         }

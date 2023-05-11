@@ -61,7 +61,7 @@
     void count_pipe(stock_t *sk, int i);
     void execute_command(char *path, char  **cpy_env, stock_t *sk);
     int execute_command_pipe(char *path, char  **cpy_env, stock_t *sk);
-    int read_alias(stock_t *sk, int i);
+    char **read_alias(stock_t *sk, int i);
     void print_alias(char **tab);
     void add_alias(char **tab);
     int find_alias(stock_t *sk, char **tab, char *cmd, int index);
@@ -94,5 +94,9 @@
     void error_exec(int exec, stock_t *sk, char *usr_bin);
     void close_fds(int fd_1, stock_t *sk);
     int builtin_pipe(char **cpy_env, stock_t *sk, char **end);
+    int input_manager(stock_t *sk);
+    void arrow_check(char c, stock_t *sk);
+    void arrow_up(stock_t *sk);
+    void arrow_down(stock_t *sk);
 
 #endif /* !MY_H_ */

@@ -30,9 +30,9 @@ static char *open_rc(void)
     return buf;
 }
 
-static int redirection_alias(stock_t *sk, char **cmd_tab, char **tab, int pass)
+static int redirection_alias(stock_t *sk, char **cmd_tab, char **tab)
 {
-    if (!strcmp(cmd_tab[0], "alias") && pass == 0 && len_tab(cmd_tab) < 2) {
+    if (!strcmp(cmd_tab[0], "alias") && len_tab(cmd_tab) < 2) {
         print_alias(tab);
         sk->check_st.is_a_builtin = 84;
         return 1;
@@ -51,24 +51,29 @@ static int redirection_alias(stock_t *sk, char **cmd_tab, char **tab, int pass)
 
 static char *creat_cmd(stock_t *sk, int index)
 {
-    char *cmd = strdup(sk->array_st.alias[index]);
+    if (sk->array_st.alias[index][0] == '\n') {
+        sk->array_st.alias[index] = NULL;
+        return NULL;
+    }
+    char *cmd = my_strdup(sk->array_st.alias[index]);
     if (cmd[my_strlen(cmd) - 1] == ' ' || cmd[my_strlen(cmd) - 1] == '\n')
         cmd[my_strlen(cmd) - 1] = '\0';
     for (size_t i = 0; i < strlen(cmd) && cmd[i] == ' '; i++) {
-        for (size_t j = 0; j < strlen(cmd) - 1; j++) {
+        for (size_t j = 0; j < strlen(cmd); j++) {
             cmd[j] = cmd[j + 1];
         }
-        cmd[strlen(cmd) - 1] = '\0';
     }
+
     return cmd;
 }
 
-int read_alias(stock_t *sk, int i)
+char **read_alias(stock_t *sk, int i)
 {
     char *buf = open_rc();
-    int pass = 0;
-    char **tab;
     char *cmd = creat_cmd(sk, i);
+    if (cmd == NULL) {
+        return sk->array_st.alias;
+    }
     char **cmd_tab = word_array(cmd, "; ");
 
     if (buf == NULL || buf[0] == '\0') {
@@ -76,13 +81,12 @@ int read_alias(stock_t *sk, int i)
         fd = open("./.42shrc", O_WRONLY | O_TRUNC | O_CREAT, 422);
         dprintf(fd, "alias ls='ls --color=auto'");
         close(fd);
-        return 0;
+        return NULL;
     }
-    tab = word_array(buf, "\n");
-
-    if (redirection_alias(sk, cmd_tab, tab, pass) == 0)
+    char **tab = word_array(buf, "\n");
+    if (redirection_alias(sk, cmd_tab, tab) == 0)
         find_alias(sk, tab, cmd, i);
     if (i < len_tab(sk->array_st.alias) - 1)
         read_alias(sk, i + 1);
-    return 0;
+    return sk->array_st.alias;
 }
