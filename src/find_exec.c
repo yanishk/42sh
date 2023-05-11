@@ -26,6 +26,9 @@ int x, int check)
         my_putstr_error("Invalid null command.\n");
         return NULL;
     }
+    if (sk->array_st.space[0][0] == '\0') {
+        return NULL;
+    }
     len_arg = my_strlen(sk->array_st.space[0]);
     path_concat = malloc(sizeof(char) * (len_array + len_arg + 2));
     my_strcpy(path_concat, array_path[x]);
@@ -37,14 +40,15 @@ int x, int check)
 char* find_dots(char *path, stock_t *sk, int check)
 {
     char **array_path = NULL;
-    int x = 0;
     char *path_concat = NULL;
-
+    int x = 0;
     if (path == NULL)
         return NULL;
     array_path = word_array(path, ":");
     while (array_path[x] != NULL) {
         path_concat = concat_malloc_path(sk, array_path, x, check);
+        if (path_concat == NULL)
+            return NULL;
         if (access(path_concat, X_OK) == 0) {
             free_array(array_path);
             return path_concat;

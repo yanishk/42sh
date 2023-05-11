@@ -80,6 +80,7 @@ stock_t *sk, glob_t glob_array)
     int is_a_source_file = loop_buffer(sk->array_st.space);
 
     sk->check_st.is_a_builtin = 0;
+    sk->check_st.last_return_value = 1;
     path = remove_path(cpy_env);
     if (is_a_source_file == 1) {
         create_cd(cpy_env, sk);
@@ -94,4 +95,5 @@ stock_t *sk, glob_t glob_array)
             child_process_glob(cpy_env, usr_bin, sk, glob_array);
         free(usr_bin);
     }
+    actualize_return_value(sk);
 }

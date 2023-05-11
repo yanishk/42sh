@@ -50,8 +50,10 @@ void which_error(int status, stock_t *sk)
 void check_command(char *usr_bin, char *str, stock_t *sk)
 {
     if (sk->check_st.is_a_builtin == 0 && usr_bin == NULL) {
-        my_putstr_error(str);
-        my_putstr_error(": Command not found.\n");
+        if (sk->array_st.space[0][0] != '\0' && sk->array_st.space[0] != NULL) {
+            my_putstr_error(str);
+            my_putstr_error(": Command not found.\n");
+        }
         sk->check_st.is_a_command = 0;
         return;
     }

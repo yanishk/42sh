@@ -87,6 +87,7 @@
     void my_echo(stock_t *sk, char **cpy_env);
     int search_env_variables(stock_t *sk, char **cpy_env);
     void print_variable_value(char *variable_name, char **cpy_env);
+    void actualize_return_value(stock_t *sk);
 
     void execute_command_glob(char *path, char  **cpy_env,
     stock_t *sk, glob_t glob_array);

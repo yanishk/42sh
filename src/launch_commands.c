@@ -13,6 +13,7 @@
 #include <fcntl.h>
 #include <stdbool.h>
 #include <glob.h>
+#include <string.h>
 #include "my.h"
 
 void launch_ducks(char *path, char **cpy_env, stock_t *sk)
@@ -30,11 +31,11 @@ void launch_ducks(char *path, char **cpy_env, stock_t *sk)
     }
 }
 
-void lauch_glob_ast(char *path, char **cpy_env, stock_t *sk, int i)
+void launch_glob_ast(char *path, char **cpy_env, stock_t *sk, int i)
 {
     glob_t glob_array;
-
     sk->array_st.space_snd = word_array(sk->array_st.virg[i], " \n");
+    sk->check_st.last_return_value = 1;
     for (int x = 1; sk->array_st.space_snd[x]; x += 1) {
         glob_array.gl_offs = 1;
         if (x == 1)
@@ -60,7 +61,7 @@ void duck_or_gob(char *path, char **cpy_env, stock_t *sk, int y)
     } else {
         launch_ducks(path, cpy_env, sk);
         if (sk->check_st.count_ast > 0)
-            lauch_glob_ast(path, cpy_env, sk, y);
+            launch_glob_ast(path, cpy_env, sk, y);
     }
 }
 
