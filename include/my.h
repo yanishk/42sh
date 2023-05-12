@@ -106,5 +106,6 @@
     void arrow_check(char c, stock_t *sk);
     void arrow_up(stock_t *sk);
     void arrow_down(stock_t *sk);
+    void init_input(stock_t *sk);
 
 #endif /* !MY_H_ */

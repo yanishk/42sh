@@ -78,10 +78,8 @@ int input_manager(stock_t *sk, char **env_cpy)
 {
     char c = '\0';
     int status = 0;
-    sk->input.cmd = malloc(sizeof(char));
-    sk->input.cmd[0] = '\0';
-    sk->array_st.buffer = NULL;
-    sk->input.cmd_len = 1;
+    char *current_path = getcwd(NULL, 0);
+    init_input(sk);
 
     while (c != '\n') {
         read(STDIN_FILENO, &c, 1);
@@ -95,5 +93,7 @@ int input_manager(stock_t *sk, char **env_cpy)
         if (c != '\033' && c != '[' && c != '\b' && c != 127 && c != '\t')
             status = set_cmd(sk, c);
     }
+    if (sk->input.cmd_len == 2)
+        print_prompt(sk, current_path, env_cpy);
     return status;
 }

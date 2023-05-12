@@ -6,6 +6,7 @@
 ##
 
 SRC	=	main.c 									\
+		src/input/init_input.c					\
 		src/input/get_input.c 					\
 		src/input/input_manager.c 				\
 		src/launch_commands.c 					\
