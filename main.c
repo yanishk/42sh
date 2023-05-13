@@ -37,6 +37,7 @@ int main(int ac, char **av, char **env)
     char **cpy_env = set_cpy_env(env);
     char *path = remove_path(cpy_env);
     stock_t *sk = malloc(sizeof(stock_t));
+    sk->check_st.size_term = 0;
     sk->check_st.end = 0;
 
     setbuf(stdout, NULL);

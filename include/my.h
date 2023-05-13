@@ -35,8 +35,12 @@
     char *my_revstr(char *str);
     char *my_int_to_str(int nb);
     char *colorize_str(const char *str, const char *color);
+    int get_size_term(void);
+    char* fill_str(char* str, size_t size, char c);
+    int choice_prompt(stock_t *sk, char *current_path, char **cpy_env);
 
     int print_prompt(stock_t *sk, char *current_path, char **env_cpy);
+    int print_prompt2(stock_t *sk, char *current_path, char **env_cpy);
     char *remove_variable_name(char *path);
     char **init_old_env(char **my_env);
     int error_handling_help(int ac, char **av);

@@ -42,6 +42,7 @@ typedef struct check_s {
     int sig;
     int core;
     int end;
+    int size_term;
 } check_t;
 
 typedef struct input_s {

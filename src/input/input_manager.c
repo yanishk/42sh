@@ -61,7 +61,7 @@ static void handle_tab(stock_t *sk, char **env_cpy)
             printf("%s\t", directory_tab->d_name);
     }
     printf("\n");
-    print_prompt(sk, current_path, env_cpy);
+    choice_prompt(sk, current_path, env_cpy);
     closedir(tab);
     return;
 }
@@ -94,6 +94,6 @@ int input_manager(stock_t *sk, char **env_cpy)
             status = set_cmd(sk, c);
     }
     if (sk->input.cmd_len == 2)
-        print_prompt(sk, current_path, env_cpy);
+        choice_prompt(sk, current_path, env_cpy);
     return status;
 }

@@ -44,6 +44,7 @@ void main_exec(stock_t *sk, char *path, char  **cpy_env)
     sk->check_st.is_a_command = 1;
     sk->check_st.is_command_exec = 0;
     sk->check_st.is_double_pipe = 0;
+    sk->check_st.size_term = get_size_term();
     for (int i = 0; sk->array_st.virg[i] &&
     sk->check_st.is_a_builtin != 84; i += 1) {
         sk->array_st.pipe = word_array(sk->array_st.virg[i], "|");
@@ -97,10 +98,12 @@ void get_input(stock_t *sk, char *path, char  **cpy_env)
     int valid = 0;
     sk->array_st.buffer = NULL;
     sk->check_st.number_command = 0;
+    sk->check_st.size_term = get_size_term();
     sk->input.nb_key_up = 0;
 
-    print_prompt(sk, getcwd(NULL, 0), cpy_env);
+    choice_prompt(sk, getcwd(NULL, 0), cpy_env);
     while (sk->check_st.end == 0) {
+        sk->check_st.size_term = get_size_term();
         valid = input_type(sk, cpy_env);
         if (valid != 0)
             continue;
@@ -109,6 +112,6 @@ void get_input(stock_t *sk, char *path, char  **cpy_env)
         sk->array_st.virg = alias_manager(sk, sk->array_st.virg);
         main_exec(sk, path, cpy_env);
         if (sk->check_st.end == 0)
-            print_prompt(sk, getcwd(NULL, 0), cpy_env);
+            choice_prompt(sk, getcwd(NULL, 0), cpy_env);
     }
 }

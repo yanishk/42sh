@@ -21,10 +21,14 @@ SRC	=	main.c 									\
 		src/execute_binary.c 					\
 		src/exit_shell.c 						\
 		src/glob_exe.c	 						\
+		src/display_prompt/fill_str.c			\
+		src/display_prompt/get_size_term.c		\
+		src/display_prompt/choice_prompt.c		\
+		src/display_prompt/display_prompt.c		\
+		src/display_prompt/display_prompt2.c	\
 		src/pipe/pipe.c 						\
 		src/pipe/exec_pipe.c 					\
 		src/pipe/redirection_pipe.c 			\
-		src/display_prompt.c					\
 		src/history/history.c					\
 		src/history/history_command.c			\
 		src/history/get_last_command_number.c 	\
