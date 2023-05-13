@@ -41,12 +41,12 @@ static char **alias_manager(stock_t *sk, char **tab)
 
 void main_exec(stock_t *sk, char *path, char  **cpy_env)
 {
-    sk->check_st.is_a_command = 1;
-    sk->check_st.is_command_exec = 0;
-    sk->check_st.is_double_pipe = 0;
     sk->check_st.size_term = get_size_term();
     for (int i = 0; sk->array_st.virg[i] &&
     sk->check_st.is_a_builtin != 84; i += 1) {
+        sk->check_st.is_a_command = 1;
+        sk->check_st.is_command_exec = 0;
+        sk->check_st.is_double_pipe = 0;
         sk->array_st.pipe = word_array(sk->array_st.virg[i], "|");
         sk->array_st.double_and = word_array(sk->array_st.virg[i], ";&");
         sk->array_st.double_and = alias_manager(sk, sk->array_st.double_and);
