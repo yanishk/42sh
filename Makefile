@@ -52,6 +52,7 @@ SRC	=	main.c 									\
 		src/arrow/arrow_up_down.c				\
 		lib/word_array_delimiter.c 				\
 		lib/word_array_delimiter2.c 			\
+		lib/word_array_double.c 				\
 		lib/print_free_array.c 					\
 		lib/my_putstr.c 						\
 		lib/my_putstr_error.c 					\
@@ -77,7 +78,7 @@ RM = rm -f
 
 CPPFLAGS += -iquote./include
 
-CFLAGS += -Wall -Wextra -g3
+CFLAGS += -Wall -Wextra
 
 NAME	=	42sh
 

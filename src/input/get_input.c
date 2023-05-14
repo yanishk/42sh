@@ -47,16 +47,9 @@ void main_exec(stock_t *sk, char *path, char  **cpy_env)
         sk->check_st.is_a_command = 1;
         sk->check_st.is_command_exec = 0;
         sk->check_st.is_double_pipe = 0;
-        sk->array_st.pipe = word_array(sk->array_st.virg[i], "|");
         sk->array_st.double_and = word_array(sk->array_st.virg[i], ";&");
         sk->array_st.double_and = alias_manager(sk, sk->array_st.double_and);
-        count_duck(sk, i);
-        count_pipe(sk, i);
-        count_asteriks(sk, i);
-        if (sk->array_st.pipe[1] != NULL && sk->check_st.is_double_pipe == 0)
-            execute_command_pipe(path, cpy_env, sk);
-        else
-            check_command_type(path, cpy_env, sk);
+        check_command_type(path, cpy_env, sk);
     }
 }
 

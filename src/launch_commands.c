@@ -67,22 +67,31 @@ void duck_or_gob(char *path, char **cpy_env, stock_t *sk, int y)
 
 void launch_command(char *path, char **cpy_env, stock_t *sk, int y)
 {
-    if ((last_command_succeed(sk) && y == 0) || (last_command_failed(sk)
-    && sk->check_st.is_double_pipe > 0 && y > 0))
-        duck_or_gob(path, cpy_env, sk, y);
+    if (sk->array_st.pipe[1] != NULL) {
+        execute_command_pipe(path, cpy_env, sk);
+    } else {
+        sk->array_st.duck =
+        word_array(sk->array_st.double_pipe[y], ">");
+        sk->array_st.reverse_duck =
+        word_array(sk->array_st.double_pipe[y], "<");
+        sk->array_st.space =
+        word_array(sk->array_st.double_pipe[y], " \t\n");
+        if ((last_command_succeed(sk) && y == 0) || (last_command_failed(sk)
+        && sk->array_st.double_pipe[1] != NULL && y > 0))
+            duck_or_gob(path, cpy_env, sk, y);
+    }
 }
 
 void check_command_type(char *path, char **cpy_env, stock_t *sk)
 {
     for (int x = 0; sk->array_st.double_and[x] != NULL; x += 1) {
-        sk->array_st.double_pipe = word_array(sk->array_st.double_and[x], "|");
+        sk->array_st.double_pipe =
+        word_array_double(sk->array_st.double_and[x], '|');
+        count_duck(sk, x);
+        count_pipe(sk, x);
+        count_asteriks(sk, x);
         for (int y = 0; sk->array_st.double_pipe[y] != NULL; y += 1) {
-            sk->array_st.duck =
-            word_array(sk->array_st.double_pipe[y], ">");
-            sk->array_st.reverse_duck =
-            word_array(sk->array_st.double_pipe[y], "<");
-            sk->array_st.space =
-            word_array(sk->array_st.double_pipe[y], " \t\n");
+            sk->array_st.pipe = word_array(sk->array_st.double_pipe[y], "|");
             launch_command(path, cpy_env, sk, y);
         }
     }

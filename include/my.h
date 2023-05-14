@@ -29,6 +29,7 @@
     int cut_str(char const *str, char *delim);
     int check_character(char const *str, char *delim, int cut_here);
     char **word_array(char const *str, char *delimiters);
+    char **word_array_double(char const *str, char c);
     int len_tab(char **tab);
     void print_array(char **array);
     void free_array(char **array);
