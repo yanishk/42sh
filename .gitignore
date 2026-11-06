@@ -1,0 +1,27 @@
+# Build output
+*.o
+*.a
+*.so
+/42sh
+/mysh
+
+# Unit tests and coverage
+/unit_tests
+*.gcda
+*.gcno
+*.gcov
+
+# Debugging
+vgcore.*
+core
+
+# Shell runtime files
+.history_log
+.42shrc
+.temp.txt
+
+# Editors and OS
+.vscode/
+.idea/
+*~
+.DS_Store
